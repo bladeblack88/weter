@@ -3,38 +3,55 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Донецк Погода">
-<title>Донецк — часы и погода</title>
+
+<title>Донецк — Часы и погода</title>
 
 <style>
-*{
- margin:0;padding:0;box-sizing:border-box;
+* {
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
 }
-html,body{
- width:100%;height:100%;overflow:hidden;
- background:#071326;color:white;
+
+html,body {
+ width:100%;
+ height:100%;
+ overflow:hidden;
+ background:#071326;
+ color:white;
  font-family:Arial,Helvetica,sans-serif;
  -webkit-text-size-adjust:none;
 }
-body{
+
+body {
  -webkit-user-select:none;
  user-select:none;
 }
-#background{
- position:absolute;top:0;left:0;
- width:100%;height:100%;
- background:
- linear-gradient(rgba(5,12,28,.30),rgba(5,12,28,.75)),
+
+#background {
+ position:absolute;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
+ background-image:
+ linear-gradient(rgba(5,12,28,.35),rgba(5,12,28,.75)),
  url("https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1400");
  background-size:cover;
  background-position:center;
  z-index:0;
 }
-.overlay{
- position:absolute;inset:0;
+
+.overlay {
+ position:absolute;
+ top:0;
+ left:0;
+ width:100%;
+ height:100%;
  background:linear-gradient(
   to bottom,
   rgba(5,12,30,.15),
@@ -42,9 +59,12 @@ body{
  );
  z-index:1;
 }
-.app{
- position:relative;z-index:2;
- width:100%;height:100%;
+
+.app {
+ position:relative;
+ z-index:2;
+ width:100%;
+ height:100%;
  height:100vh;
  padding:18px 3% 10px;
  display:-webkit-box;
@@ -57,7 +77,8 @@ body{
  -webkit-justify-content:space-between;
  justify-content:space-between;
 }
-.top{
+
+.top {
  display:-webkit-box;
  display:-webkit-flex;
  display:flex;
@@ -65,31 +86,35 @@ body{
  -webkit-justify-content:space-between;
  justify-content:space-between;
 }
-.city{
+
+.city {
  font-size:25px;
  font-weight:bold;
  letter-spacing:3px;
 }
-.date{
+
+.date {
  font-size:15px;
  margin-top:7px;
  color:#dceaff;
 }
-.status{
+
+.status {
  text-align:right;
  font-size:13px;
  line-height:1.6;
  color:#d9eaff;
 }
-.center{
+
+/* ЧАСЫ */
+
+.center {
  text-align:center;
  margin:auto 0;
  width:100%;
 }
 
-/* БОЛЬШИЕ НЕОНОВЫЕ ЧАСЫ */
-
-.clock{
+.clock {
  display:-webkit-box;
  display:-webkit-flex;
  display:flex;
@@ -101,58 +126,64 @@ body{
  align-items:center;
  white-space:nowrap;
  width:100%;
- height:180px;
+ height:190px;
 }
-.time{
- font-size:clamp(90px,15vw,155px);
+
+.time {
+ font-size:145px !important;
  font-weight:200;
  font-family:"Helvetica Neue",Arial,sans-serif;
  letter-spacing:-5px;
  line-height:1;
  color:#d9f3ff;
  text-shadow:
- 0 0 3px #fff,
+ 0 0 3px #ffffff,
  0 0 10px #80d7ff,
  0 0 22px #008cff,
  0 0 45px #007bff,
  0 0 75px #005dff;
 }
-.colon{
+
+.colon {
  margin:0 5px;
  color:#c6efff;
  text-shadow:
- 0 0 10px #fff,
+ 0 0 10px #ffffff,
  0 0 25px #008cff;
 }
-.seconds{
- font-size:34px;
+
+.seconds {
+ font-size:38px !important;
  font-weight:300;
  margin-left:10px;
  align-self:center;
  color:#d9f3ff;
  text-shadow:
- 0 0 8px #fff,
+ 0 0 8px #ffffff,
  0 0 25px #008cff;
 }
 
 /* ПОГОДА */
 
-.weather-main{
+.weather-main {
  margin-top:12px;
 }
-.temperature{
+
+.temperature {
  font-size:85px;
  font-weight:200;
  color:#e1f6ff;
  text-shadow:
- 0 0 12px #fff,
+ 0 0 12px #ffffff,
  0 0 35px #008cff;
 }
-.description{
+
+.description {
  font-size:23px;
  margin-top:5px;
 }
-.details{
+
+.details {
  display:-webkit-box;
  display:-webkit-flex;
  display:flex;
@@ -164,24 +195,27 @@ body{
  margin-top:15px;
  font-size:17px;
 }
-.details span{
+
+.details span {
  margin:5px 12px;
  text-shadow:0 2px 10px black;
 }
 
 /* ПРОГНОЗ */
 
-.bottom{
+.bottom {
  width:100%;
  padding-top:10px;
 }
-.hourly-title{
+
+.hourly-title {
  text-align:center;
  font-size:16px;
  letter-spacing:2px;
  margin-bottom:10px;
 }
-.hourly{
+
+.hourly {
  display:-webkit-box;
  display:-webkit-flex;
  display:flex;
@@ -189,7 +223,8 @@ body{
  -webkit-flex-wrap:nowrap;
  flex-wrap:nowrap;
 }
-.hour{
+
+.hour {
  -webkit-box-flex:1;
  -webkit-flex:1 1 0;
  flex:1 1 0;
@@ -198,17 +233,32 @@ body{
  padding:10px 2px;
  text-align:center;
  background:rgba(12,28,48,.78);
- border:1px solid rgba(255,255,255,.3);
+ border:1px solid rgba(140,195,255,.5);
  border-radius:12px;
 }
-.hour-time{font-size:14px}
-.hour-icon{font-size:27px;margin:7px 0}
-.hour-temp{font-size:21px;font-weight:bold}
-.hour-rain{font-size:11px;margin-top:5px}
+
+.hour-time {
+ font-size:14px;
+}
+
+.hour-icon {
+ font-size:27px;
+ margin:7px 0;
+}
+
+.hour-temp {
+ font-size:21px;
+ font-weight:bold;
+}
+
+.hour-rain {
+ font-size:11px;
+ margin-top:5px;
+}
 
 /* ИСТОЧНИКИ */
 
-.source-title{
+.source-title {
  text-align:center;
  font-size:12px;
  letter-spacing:2px;
@@ -216,7 +266,8 @@ body{
  margin-bottom:7px;
  color:#cbdff5;
 }
-.sources{
+
+.sources {
  display:-webkit-box;
  display:-webkit-flex;
  display:flex;
@@ -226,7 +277,8 @@ body{
  -webkit-justify-content:center;
  justify-content:center;
 }
-.source-button{
+
+.source-button {
  display:none;
  color:#dcecff;
  background:rgba(20,50,90,.65);
@@ -236,13 +288,22 @@ body{
  margin:3px;
  font-size:13px;
 }
-.source-button.active{
+
+.source-button.active {
  background:rgba(0,115,255,.5);
  border:1px solid #83d8ff;
  box-shadow:0 0 12px rgba(0,145,255,.55);
  color:white;
 }
-.footer{
+
+.error {
+ font-size:12px;
+ color:#ffd5d5;
+ text-align:center;
+ margin-top:5px;
+}
+
+.footer {
  display:-webkit-box;
  display:-webkit-flex;
  display:flex;
@@ -255,8 +316,13 @@ body{
  margin-top:8px;
  font-size:12px;
 }
-.footer a{color:white;text-decoration:none}
-.refresh{
+
+.footer a {
+ color:white;
+ text-decoration:none;
+}
+
+.refresh {
  background:rgba(255,255,255,.16);
  color:white;
  border:1px solid rgba(255,255,255,.5);
@@ -264,28 +330,47 @@ body{
  border-radius:22px;
  font-size:14px;
 }
-.error{
- font-size:12px;
- color:#ffd5d5;
- text-align:center;
- margin-top:5px;
-}
 
-/* ПОРТРЕТНЫЙ РЕЖИМ */
+/* ПЛАНШЕТ ВЕРТИКАЛЬНО */
 
-@media screen and (orientation:portrait){
- .city{font-size:20px}
- .clock{height:130px}
- .time{font-size:13vw;letter-spacing:-3px}
- .seconds{font-size:23px;margin-left:5px}
- .temperature{font-size:65px}
- .description{font-size:20px}
- .details{font-size:14px}
- .hourly{
+@media screen and (orientation:portrait) {
+
+ .city {
+  font-size:20px;
+ }
+
+ .clock {
+  height:130px;
+ }
+
+ .time {
+  font-size:95px !important;
+  letter-spacing:-3px;
+ }
+
+ .seconds {
+  font-size:27px !important;
+  margin-left:5px;
+ }
+
+ .temperature {
+  font-size:65px;
+ }
+
+ .description {
+  font-size:20px;
+ }
+
+ .details {
+  font-size:14px;
+ }
+
+ .hourly {
   -webkit-flex-wrap:wrap;
   flex-wrap:wrap;
  }
- .hour{
+
+ .hour {
   -webkit-box-flex:0;
   -webkit-flex:0 0 23%;
   flex:0 0 23%;
@@ -293,26 +378,82 @@ body{
  }
 }
 
-/* НИЗКИЙ ЭКРАН IPAD MINI */
+/* IPAD MINI 1 — ГОРИЗОНТАЛЬНО */
 
-@media screen and (max-height:650px) and (orientation:landscape){
- .app{padding-top:6px;padding-bottom:5px}
- .city{font-size:20px}
- .date{font-size:12px}
- .clock{height:120px}
- .time{font-size:105px}
- .seconds{font-size:25px}
- .temperature{font-size:55px}
- .weather-main{margin-top:0}
- .description{font-size:18px}
- .details{font-size:13px;margin-top:3px}
- .hourly-title{margin-bottom:5px}
- .hour{padding:5px 2px}
- .hour-icon{font-size:20px;margin:3px}
- .hour-temp{font-size:17px}
- .source-title{margin-top:5px;margin-bottom:3px}
- .source-button{padding:5px 12px;margin:2px}
- .footer{margin-top:3px}
+@media screen and (max-height:650px) and (orientation:landscape) {
+
+ .app {
+  padding-top:6px;
+  padding-bottom:5px;
+ }
+
+ .city {
+  font-size:20px;
+ }
+
+ .date {
+  font-size:12px;
+ }
+
+ .clock {
+  height:120px;
+ }
+
+ .time {
+  font-size:110px !important;
+ }
+
+ .seconds {
+  font-size:30px !important;
+ }
+
+ .temperature {
+  font-size:55px;
+ }
+
+ .weather-main {
+  margin-top:0;
+ }
+
+ .description {
+  font-size:18px;
+ }
+
+ .details {
+  font-size:13px;
+  margin-top:3px;
+ }
+
+ .hourly-title {
+  margin-bottom:5px;
+ }
+
+ .hour {
+  padding:5px 2px;
+ }
+
+ .hour-icon {
+  font-size:20px;
+  margin:3px;
+ }
+
+ .hour-temp {
+  font-size:17px;
+ }
+
+ .source-title {
+  margin-top:5px;
+  margin-bottom:3px;
+ }
+
+ .source-button {
+  padding:5px 12px;
+  margin:2px;
+ }
+
+ .footer {
+  margin-top:3px;
+ }
 }
 </style>
 </head>
@@ -329,6 +470,7 @@ body{
   <div class="city">ДОНЕЦК · ДНР</div>
   <div class="date" id="date">Загрузка...</div>
  </div>
+
  <div class="status">
   <div>LIVE WEATHER</div>
   <div id="updated">Проверка источников...</div>
@@ -384,6 +526,7 @@ body{
   <a href="https://www.gismeteo.ru/weather-donetsk-5080/" target="_blank">
    Гисметео
   </a>
+
   <button class="refresh" onclick="checkAll()">
    ↻ Обновить
   </button>
@@ -416,18 +559,19 @@ var API_MET=
 "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat="+LAT+"&lon="+LON;
 
 
-/* ЧАСЫ */
+/* ЧАСЫ — МОСКОВСКОЕ ВРЕМЯ UTC+3 */
 
-function two(n){
+function two(n) {
  return n<10?"0"+n:""+n;
 }
 
-function updateClock(){
+function updateClock() {
 
  var d=new Date();
 
- /* Донецк: UTC+3 */
- var local=new Date(d.getTime()+d.getTimezoneOffset()*60000+10800000);
+ var local=new Date(
+  d.getTime()+d.getTimezoneOffset()*60000+10800000
+ );
 
  document.getElementById("hours").innerHTML=
  two(local.getUTCHours());
@@ -462,7 +606,7 @@ setInterval(updateClock,1000);
 
 /* ПОГОДНЫЕ ИКОНКИ */
 
-function weatherIcon(code,day){
+function weatherIcon(code,day) {
 
  if(code===0)return day?"☀️":"🌙";
  if(code<=2)return day?"🌤️":"☁️";
@@ -505,21 +649,21 @@ var descriptions={
 
 /* ПОГОДНЫЙ ФОН */
 
-function setBackground(code,day){
+function setBackground(code,day) {
 
  var url;
 
- if(code===0){
+ if(code===0) {
   url=day?
   "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1400":
   "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1400";
- }else if(code<=3){
+ } else if(code<=3) {
   url="https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=1400";
- }else if(code<=48){
+ } else if(code<=48) {
   url="https://images.unsplash.com/photo-1485236715568-ddc5ee6ca227?w=1400";
- }else if(code<=65||code<=82){
+ } else if(code<=82) {
   url="https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1400";
- }else{
+ } else {
   url="https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=1400";
  }
 
@@ -528,14 +672,14 @@ function setBackground(code,day){
 }
 
 
-/* ПОГОДНЫЕ ДАННЫЕ */
+/* ПОГОДА */
 
 var activeSource="";
 var available={};
 var cache={};
 var checking=false;
 
-function showWeather(data){
+function showWeather(data) {
 
  document.getElementById("temperature").innerHTML=
  Math.round(data.temp)+"°";
@@ -560,7 +704,7 @@ function showWeather(data){
 
  var html="";
 
- for(var i=0;i<data.hourly.length&&i<8;i++){
+ for(var i=0;i<data.hourly.length&&i<8;i++) {
 
   var h=data.hourly[i];
 
@@ -579,15 +723,15 @@ function showWeather(data){
 
  document.getElementById("error").innerHTML="";
 
- try{
+ try {
   localStorage.setItem("donetskWeather",JSON.stringify(data));
- }catch(e){}
+ } catch(e) {}
 }
 
 
-/* ВЫБОР ИСТОЧНИКА */
+/* ПЕРЕКЛЮЧЕНИЕ ИСТОЧНИКОВ */
 
-function selectSource(name){
+function selectSource(name) {
 
  if(!available[name]||!cache[name])return;
 
@@ -596,12 +740,12 @@ function selectSource(name){
  renderSources();
 }
 
-function renderSources(){
+function renderSources() {
 
  var names=["Open-Meteo","WTTR.IN","MET Norway"];
  var html="";
 
- for(var i=0;i<names.length;i++){
+ for(var i=0;i<names.length;i++) {
 
   var name=names[i];
 
@@ -617,47 +761,52 @@ function renderSources(){
 }
 
 
-/* ЗАПРОСЫ ДЛЯ СТАРОГО SAFARI */
+/* ЗАПРОСЫ */
 
-function request(url,callback){
+function request(url,callback) {
 
  var x=new XMLHttpRequest();
  var finished=false;
 
- function end(ok,data){
+ function end(ok,data) {
   if(finished)return;
   finished=true;
   callback(ok,data);
  }
 
- try{
+ try {
 
   x.open("GET",url,true);
   x.timeout=15000;
 
-  x.onreadystatechange=function(){
+  x.onreadystatechange=function() {
 
    if(x.readyState!==4)return;
 
-   if(x.status>=200&&x.status<300){
+   if(x.status>=200&&x.status<300) {
 
-    try{
+    try {
      end(true,JSON.parse(x.responseText));
-    }catch(e){
+    } catch(e) {
      end(false,null);
     }
 
-   }else{
+   } else {
     end(false,null);
    }
   };
 
-  x.onerror=function(){end(false,null);};
-  x.ontimeout=function(){end(false,null);};
+  x.onerror=function() {
+   end(false,null);
+  };
+
+  x.ontimeout=function() {
+   end(false,null);
+  };
 
   x.send(null);
 
- }catch(e){
+ } catch(e) {
   end(false,null);
  }
 }
@@ -665,11 +814,11 @@ function request(url,callback){
 
 /* OPEN-METEO */
 
-function loadOpen(callback){
+function loadOpen(callback) {
 
- request(API_OPEN,function(ok,data){
+ request(API_OPEN,function(ok,data) {
 
-  if(!ok||!data.current||!data.hourly){
+  if(!ok||!data.current||!data.hourly) {
    callback(false);
    return;
   }
@@ -678,8 +827,8 @@ function loadOpen(callback){
   var h=data.hourly;
   var start=0;
 
-  for(var j=0;j<h.time.length;j++){
-   if(h.time[j]>=c.time){
+  for(var j=0;j<h.time.length;j++) {
+   if(h.time[j]>=c.time) {
     start=j;
     break;
    }
@@ -687,7 +836,7 @@ function loadOpen(callback){
 
   var hourly=[];
 
-  for(var i=start;i<start+8&&i<h.time.length;i++){
+  for(var i=start;i<start+8&&i<h.time.length;i++) {
 
    var code=h.weather_code[i];
 
@@ -699,7 +848,7 @@ function loadOpen(callback){
    });
   }
 
-  if(hourly.length===0){
+  if(hourly.length===0) {
    callback(false);
    return;
   }
@@ -724,16 +873,16 @@ function loadOpen(callback){
 
 /* WTTR.IN */
 
-function loadWttr(callback){
+function loadWttr(callback) {
 
- request(API_WTTR,function(ok,data){
+ request(API_WTTR,function(ok,data) {
 
-  if(!ok){
+  if(!ok) {
    callback(false);
    return;
   }
 
-  try{
+  try {
 
    if(data.data)data=data.data;
 
@@ -745,6 +894,7 @@ function loadWttr(callback){
    if(currentHour>=24)currentHour-=24;
 
    var today=new Date(now.getTime()+10800000);
+
    var todayString=
     today.getUTCFullYear()+"-"+
     two(today.getUTCMonth()+1)+"-"+
@@ -752,11 +902,11 @@ function loadWttr(callback){
 
    var hourly=[];
 
-   for(var d=0;d<days.length;d++){
+   for(var d=0;d<days.length;d++) {
 
     if(days[d].date!==todayString)continue;
 
-    for(var i=0;i<days[d].hourly.length;i++){
+    for(var i=0;i<days[d].hourly.length;i++) {
 
      var item=days[d].hourly[i];
      var hour=Math.floor(parseInt(item.time,10)/100);
@@ -788,7 +938,7 @@ function loadWttr(callback){
     hourly:hourly.slice(0,8)
    });
 
-  }catch(e){
+  } catch(e) {
    callback(false);
   }
 
@@ -798,7 +948,7 @@ function loadWttr(callback){
 
 /* MET NORWAY */
 
-function metIcon(s){
+function metIcon(s) {
 
  if(!s)return "☁️";
  if(s.indexOf("thunder")>=0)return "⛈️";
@@ -811,35 +961,36 @@ function metIcon(s){
  return "☁️";
 }
 
-function loadMet(callback){
+function loadMet(callback) {
 
- request(API_MET,function(ok,data){
+ request(API_MET,function(ok,data) {
 
-  if(!ok||!data.properties||!data.properties.timeseries){
+  if(!ok||!data.properties||!data.properties.timeseries) {
    callback(false);
    return;
   }
 
-  try{
+  try {
 
    var series=data.properties.timeseries;
    var now=Date.now();
    var current=null;
    var hourly=[];
 
-   for(var i=0;i<series.length;i++){
+   for(var i=0;i<series.length;i++) {
 
     var item=series[i];
     var t=new Date(item.time).getTime();
     var instant=item.data.instant.details;
 
-    if(!current&&t<=now+3600000){
+    if(!current&&t<=now+3600000) {
      current=instant;
     }
 
-    if(t>=now&&hourly.length<8){
+    if(t>=now&&hourly.length<8) {
 
      var next=item.data.next_1_hours||item.data.next_6_hours;
+
      var symbol=next&&next.summary?
       next.summary.symbol_code:"cloudy";
 
@@ -857,7 +1008,7 @@ function loadMet(callback){
     }
    }
 
-   if(!current||hourly.length===0){
+   if(!current||hourly.length===0) {
     throw new Error("No MET data");
    }
 
@@ -878,7 +1029,7 @@ function loadMet(callback){
     hourly:hourly
    });
 
-  }catch(e){
+  } catch(e) {
    callback(false);
   }
 
@@ -888,7 +1039,7 @@ function loadMet(callback){
 
 /* ПРОВЕРКА ВСЕХ ИСТОЧНИКОВ */
 
-function checkAll(){
+function checkAll() {
 
  if(checking)return;
 
@@ -906,7 +1057,7 @@ function checkAll(){
  var results=0;
  var previous=activeSource;
 
- function finish(){
+ function finish() {
 
   results++;
 
@@ -915,23 +1066,23 @@ function checkAll(){
   checking=false;
   renderSources();
 
-  if(previous&&available[previous]){
+  if(previous&&available[previous]) {
    selectSource(previous);
-  }else{
+  } else {
 
    var order=["Open-Meteo","WTTR.IN","MET Norway"];
    var chosen=null;
 
-   for(var i=0;i<order.length;i++){
-    if(available[order[i]]){
+   for(var i=0;i<order.length;i++) {
+    if(available[order[i]]) {
      chosen=order[i];
      break;
     }
    }
 
-   if(chosen){
+   if(chosen) {
     selectSource(chosen);
-   }else{
+   } else {
 
     document.getElementById("updated").innerHTML=
      "Источники недоступны";
@@ -944,17 +1095,17 @@ function checkAll(){
   }
  }
 
- for(var i=0;i<providers.length;i++){
+ for(var i=0;i<providers.length;i++) {
 
-  (function(p){
+  (function(p) {
 
-   p.load(function(ok,data){
+   p.load(function(ok,data) {
 
     available[p.name]=ok;
 
-    if(ok){
+    if(ok) {
      cache[p.name]=data;
-    }else{
+    } else {
      delete cache[p.name];
     }
 
@@ -966,11 +1117,11 @@ function checkAll(){
 }
 
 
-/* ПОСЛЕДНИЕ СОХРАНЁННЫЕ ДАННЫЕ */
+/* СОХРАНЁННЫЕ ДАННЫЕ */
 
-function showSaved(){
+function showSaved() {
 
- try{
+ try {
 
   var saved=localStorage.getItem("donetskWeather");
 
@@ -999,7 +1150,7 @@ function showSaved(){
 
   var html="";
 
-  for(var i=0;i<data.hourly.length;i++){
+  for(var i=0;i<data.hourly.length;i++) {
 
    var h=data.hourly[i];
 
@@ -1013,30 +1164,32 @@ function showSaved(){
 
   document.getElementById("hourly").innerHTML=html;
 
- }catch(e){}
+ } catch(e) {}
 }
 
 
 /* ЗАПУСК */
 
-try{
+try {
  showSaved();
-}catch(e){}
+} catch(e) {}
 
 checkAll();
 
-/* Проверяем погоду каждые 15 минут */
+/* Проверка каждые 15 минут */
 setInterval(checkAll,15*60*1000);
 
 /* При возвращении на страницу */
-document.addEventListener("visibilitychange",function(){
 
- if(!document.hidden){
+document.addEventListener("visibilitychange",function() {
+
+ if(!document.hidden) {
   updateClock();
   checkAll();
  }
 });
 
 </script>
+
 </body>
 </html>
