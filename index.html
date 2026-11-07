@@ -7,358 +7,1410 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#07152b">
-<title>Часы и погода — Донецк</title>
+<title>Донецк — Часы и погода</title>
+
 <style>
-html,body{margin:0;width:100%;height:100%;background:#061329;color:#fff;font-family:Arial,Helvetica,sans-serif;overflow-x:hidden}
-*{box-sizing:border-box}
-body{min-height:100%;background:radial-gradient(ellipse at 50% 42%,rgba(20,88,166,.30),transparent 48%),linear-gradient(145deg,#071329 0%,#10284a 52%,#061329 100%)}
-#app{min-height:100vh;min-height:100%;padding:18px 22px 14px;display:flex;flex-direction:column;position:relative;z-index:1}
-.top{display:flex;justify-content:space-between;align-items:flex-start}
-.city{font-size:clamp(20px,3vw,30px);font-weight:bold;letter-spacing:3px}
-.date{font-size:14px;color:#c9d9ef;margin-top:7px}
-.live{text-align:right;font-size:12px;letter-spacing:1px;color:#bfe7ff}
-#sourceLabel{display:block;margin-top:7px;letter-spacing:0;color:#d3e5fa}
-.clockWrap{text-align:center;margin:4vh 0 1vh}
-.clock{font-size:clamp(76px,15vw,170px);font-weight:300;letter-spacing:2px;line-height:1.05;color:#f5fbff;text-shadow:0 0 8px #fff,0 0 20px #168bff,0 0 42px #087cff,0 0 75px rgba(0,120,255,.7);white-space:nowrap}
-.seconds{font-size:.34em;vertical-align:baseline;margin-left:5px;letter-spacing:0}
-.weather{text-align:center;margin:auto 0 0;padding:0 0 10px}
-.temp{font-size:clamp(58px,10vw,100px);font-weight:300;color:#fff;text-shadow:0 0 12px #168bff,0 0 32px #087cff;line-height:1.1}
-.description{font-size:clamp(17px,2.5vw,25px);margin:10px 0 22px;color:#eef7ff}
-.metrics{display:flex;justify-content:center;flex-wrap:wrap;gap:12px 28px;font-size:clamp(13px,1.8vw,18px);color:#e9f4ff;margin:0 auto 25px}
-.metric{white-space:nowrap}
-.sectionTitle{text-align:center;font-size:15px;letter-spacing:2px;margin:10px 0 12px;color:#d9eaff}
-.forecast{display:flex;gap:7px;justify-content:center;width:100%}
-.hour{flex:1;min-width:0;max-width:145px;text-align:center;border:1px solid rgba(111,177,255,.7);border-radius:13px;background:rgba(30,70,120,.35);padding:10px 3px;box-shadow:inset 0 0 12px rgba(90,160,255,.12)}
-.hourTime{font-size:clamp(11px,1.5vw,15px);font-weight:bold}
-.hourIcon{font-size:clamp(19px,3vw,27px);margin:8px 0}
-.hourTemp{font-size:clamp(16px,2vw,22px);font-weight:bold;text-shadow:0 0 9px #299cff}
-.hourRain{font-size:11px;color:#9feaff;margin-top:7px}
-.sources{text-align:center;margin:16px 0 5px}
-.sourcesTitle{font-size:12px;letter-spacing:2px;color:#bcd8f4;margin-bottom:8px}
-.sourceButtons{display:flex;justify-content:center;flex-wrap:wrap;gap:7px}
-.sourceButton{border:1px solid #668fc0;border-radius:18px;background:rgba(35,75,125,.55);color:#dceeff;padding:8px 13px;font-size:13px}
-.sourceButton.active{background:#1765ad;border-color:#9bd5ff;box-shadow:0 0 12px rgba(40,145,255,.55)}
-.bottom{display:flex;justify-content:space-between;align-items:center;margin-top:8px;font-size:11px;color:#9eb8d8}
-button{cursor:pointer}
-.refresh{border:1px solid #80baff;border-radius:22px;background:rgba(35,100,175,.65);color:white;padding:10px 16px;font-size:13px}
-.note{text-align:center;color:#9db5d2;font-size:11px;margin-top:8px;min-height:14px}
-.windowGlow{position:fixed;pointer-events:none;left:0;right:0;top:0;bottom:0;opacity:.18;background:linear-gradient(115deg,transparent 0 28%,rgba(160,205,255,.09) 28.2%,transparent 29% 69%,rgba(160,205,255,.06) 69.2%,transparent 70%),radial-gradient(ellipse at 50% 0%,rgba(160,200,255,.15),transparent 55%);z-index:0}
-@media(max-width:600px){
- #app{padding:13px 10px 10px}
- .clockWrap{margin:7vh 0 3vh}
- .metrics{gap:9px 13px;margin-bottom:18px}
- .forecast{gap:4px}
- .hour{padding:8px 1px;border-radius:9px}
- .hourRain{font-size:9px}
- .sectionTitle{font-size:12px}
+* {
+    box-sizing: border-box;
 }
-@media(max-height:650px){
- #app{padding-top:10px}
- .clockWrap{margin:1vh 0}
- .clock{font-size:clamp(66px,12vw,120px)}
- .temp{font-size:clamp(48px,8vw,75px)}
- .description{margin:5px 0 12px}
- .metrics{margin-bottom:12px}
- .hourIcon{margin:4px 0}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    min-height: 100%;
+    background: #061329;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+body {
+    background:
+      radial-gradient(ellipse at 50% 40%, rgba(20,100,220,.38), transparent 55%),
+      linear-gradient(145deg,#071329,#10284a 55%,#061329);
+}
+
+#app {
+    min-height: 100vh;
+    width: 100%;
+    padding: 18px 22px 12px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.windowGlow {
+    position: fixed;
+    pointer-events: none;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: .18;
+    background:
+      linear-gradient(115deg,transparent 28%,rgba(160,205,255,.1) 29%,transparent 30%),
+      radial-gradient(ellipse at 50% 0%,rgba(160,200,255,.18),transparent 55%);
+    z-index: 0;
+}
+
+#app > * {
+    position: relative;
+    z-index: 1;
+}
+
+/* Верхняя панель */
+
+.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.city {
+    font-size: 27px;
+    font-weight: bold;
+    letter-spacing: 3px;
+}
+
+.date {
+    font-size: 14px;
+    color: #c9d9ef;
+    margin-top: 7px;
+}
+
+.live {
+    text-align: right;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: #bfe7ff;
+}
+
+#sourceLabel {
+    display: block;
+    margin-top: 7px;
+    letter-spacing: 0;
+}
+
+/* Часы */
+
+.clockWrap {
+    text-align: center;
+    margin-top: 35px;
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.clock {
+    font-size: 135px;
+    font-weight: 300;
+    letter-spacing: 2px;
+    line-height: 1.2;
+    white-space: nowrap;
+    color: #fff;
+    text-shadow:
+      0 0 8px #fff,
+      0 0 20px #168bff,
+      0 0 45px #087cff,
+      0 0 75px #087cff;
+}
+
+.seconds {
+    font-size: 43px;
+    vertical-align: baseline;
+    margin-left: 5px;
+}
+
+/* Основная погода */
+
+.weather {
+    text-align: center;
+    margin-top: auto;
+    padding-bottom: 8px;
+}
+
+.temp {
+    font-size: 90px;
+    font-weight: 300;
+    line-height: 1.1;
+    color: white;
+    text-shadow:
+      0 0 12px #168bff,
+      0 0 32px #087cff;
+}
+
+.description {
+    font-size: 23px;
+    margin: 12px 0 25px;
+    color: #eef7ff;
+}
+
+.metrics {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 12px 25px;
+    font-size: 17px;
+    color: #e9f4ff;
+    margin: 0 auto 28px;
+}
+
+.metric {
+    white-space: nowrap;
+}
+
+/* Почасовой прогноз */
+
+.sectionTitle {
+    text-align: center;
+    font-size: 15px;
+    letter-spacing: 2px;
+    margin: 10px 0 13px;
+    color: #d9eaff;
+}
+
+.forecast {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+    width: 100%;
+}
+
+.hour {
+    flex: 1 1 0;
+    min-width: 0;
+    max-width: 150px;
+    text-align: center;
+    border: 1px solid rgba(111,177,255,.8);
+    border-radius: 13px;
+    background: rgba(30,70,120,.38);
+    padding: 12px 3px;
+    box-shadow:
+      inset 0 0 12px rgba(90,160,255,.12),
+      0 0 8px rgba(40,120,255,.12);
+}
+
+.hourTime {
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.hourIcon {
+    font-size: 25px;
+    margin: 9px 0;
+}
+
+.hourTemp {
+    font-size: 21px;
+    font-weight: bold;
+    text-shadow: 0 0 9px #299cff;
+}
+
+.hourRain {
+    font-size: 11px;
+    color: #9feaff;
+    margin-top: 8px;
+}
+
+/* Источники */
+
+.sources {
+    text-align: center;
+    margin: 17px 0 5px;
+}
+
+.sourcesTitle {
+    font-size: 12px;
+    letter-spacing: 2px;
+    color: #bcd8f4;
+    margin-bottom: 9px;
+}
+
+.sourceButtons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.sourceButton {
+    border: 1px solid #668fc0;
+    border-radius: 20px;
+    background: rgba(35,75,125,.55);
+    color: #dceeff;
+    padding: 9px 16px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.sourceButton.active {
+    background: #1765ad;
+    border-color: #9bd5ff;
+    box-shadow: 0 0 12px rgba(40,145,255,.65);
+}
+
+/* Нижняя панель */
+
+.bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    font-size: 11px;
+    color: #9eb8d8;
+}
+
+.refresh {
+    border: 1px solid #80baff;
+    border-radius: 22px;
+    background: rgba(35,100,175,.65);
+    color: white;
+    padding: 11px 18px;
+    font-size: 14px;
+}
+
+.note {
+    text-align: center;
+    color: #9db5d2;
+    font-size: 11px;
+    margin-top: 8px;
+    min-height: 14px;
+}
+
+/* Альбомный iPad */
+
+@media screen and (min-width: 800px) {
+    .clock {
+        font-size: 145px;
+    }
+
+    .seconds {
+        font-size: 46px;
+    }
+
+    .clockWrap {
+        margin-top: 35px;
+        margin-bottom: 25px;
+    }
+}
+
+/* Небольшие экраны */
+
+@media screen and (max-width: 800px) {
+    #app {
+        padding: 13px 10px;
+    }
+
+    .city {
+        font-size: 20px;
+    }
+
+    .clock {
+        font-size: 95px;
+    }
+
+    .seconds {
+        font-size: 32px;
+    }
+
+    .temp {
+        font-size: 65px;
+    }
+
+    .metrics {
+        gap: 10px;
+        font-size: 13px;
+    }
+
+    .forecast {
+        gap: 4px;
+    }
+
+    .hour {
+        padding: 9px 1px;
+    }
+
+    .hourTime {
+        font-size: 11px;
+    }
+
+    .hourTemp {
+        font-size: 16px;
+    }
+
+    .hourIcon {
+        font-size: 19px;
+    }
+
+    .hourRain {
+        font-size: 9px;
+    }
+}
+
+/* Низкий экран в альбомном положении */
+
+@media screen and (max-height: 650px) {
+    #app {
+        padding-top: 8px;
+    }
+
+    .clock {
+        font-size: 100px;
+    }
+
+    .seconds {
+        font-size: 32px;
+    }
+
+    .clockWrap {
+        margin-top: 5px;
+        margin-bottom: 8px;
+    }
+
+    .temp {
+        font-size: 65px;
+    }
+
+    .description {
+        margin: 5px 0 12px;
+    }
+
+    .metrics {
+        margin-bottom: 12px;
+    }
+
+    .hourIcon {
+        margin: 4px 0;
+    }
+
+    .hour {
+        padding: 7px 2px;
+    }
 }
 </style>
 </head>
+
 <body>
+
 <div class="windowGlow"></div>
+
 <div id="app">
- <div class="top">
-  <div>
-   <div class="city">ДОНЕЦК · ДНР</div>
-   <div class="date" id="date">Загрузка даты...</div>
-  </div>
-  <div class="live">LIVE WEATHER<span id="sourceLabel">Источник: проверка...</span></div>
- </div>
 
- <div class="clockWrap">
-  <div class="clock"><span id="hoursMinutes">--:--</span><span class="seconds" id="seconds">:--</span></div>
- </div>
+    <div class="top">
+        <div>
+            <div class="city">ДОНЕЦК · ДНР</div>
+            <div class="date" id="date">Загрузка даты...</div>
+        </div>
 
- <div class="weather">
-  <div class="temp" id="temperature">--°</div>
-  <div class="description" id="description">Загружаем погоду...</div>
-  <div class="metrics">
-   <div class="metric">🌡 Ощущается: <span id="feels">--°</span></div>
-   <div class="metric">💧 Влажность: <span id="humidity">--%</span></div>
-   <div class="metric">🌬 Ветер: <span id="wind">-- м/с</span></div>
-   <div class="metric">🌡 Давление: <span id="pressure">-- мм</span></div>
-  </div>
-  <div class="sectionTitle">ПРОГНОЗ НА БЛИЖАЙШИЕ 8 ЧАСОВ</div>
-  <div class="forecast" id="forecast">
-   <div class="hour">Загрузка прогноза...</div>
-  </div>
-  <div class="sources">
-   <div class="sourcesTitle">ВЫБОР ПОГОДНОГО ИСТОЧНИКА</div>
-   <div class="sourceButtons" id="sourceButtons"></div>
-  </div>
- </div>
+        <div class="live">
+            LIVE WEATHER
+            <span id="sourceLabel">Источник: проверка...</span>
+        </div>
+    </div>
 
- <div class="bottom">
-  <span id="updateStatus">Ожидание данных</span>
-  <button class="refresh" onclick="loadWeather(true)">↻ Обновить</button>
- </div>
- <div class="note" id="note">Донецк · Данные MET Norway</div>
+    <div class="clockWrap">
+        <div class="clock">
+            <span id="hoursMinutes">--:--</span>
+            <span class="seconds" id="seconds">:--</span>
+        </div>
+    </div>
+
+    <div class="weather">
+
+        <div class="temp" id="temperature">--°</div>
+
+        <div class="description" id="description">
+            Загружаем погоду...
+        </div>
+
+        <div class="metrics">
+
+            <div class="metric">
+                🌡 Ощущается:
+                <span id="feels">--°</span>
+            </div>
+
+            <div class="metric">
+                💧 Влажность:
+                <span id="humidity">--%</span>
+            </div>
+
+            <div class="metric">
+                🌬 Ветер:
+                <span id="wind">-- м/с</span>
+            </div>
+
+            <div class="metric">
+                🌡 Давление:
+                <span id="pressure">-- мм</span>
+            </div>
+
+        </div>
+
+        <div class="sectionTitle">
+            ПРОГНОЗ НА БЛИЖАЙШИЕ 8 ЧАСОВ
+        </div>
+
+        <div class="forecast" id="forecast">
+            <div class="hour">Загрузка прогноза...</div>
+        </div>
+
+        <div class="sources">
+
+            <div class="sourcesTitle">
+                ВЫБОР ПОГОДНОГО ИСТОЧНИКА
+            </div>
+
+            <div class="sourceButtons" id="sourceButtons"></div>
+
+        </div>
+
+    </div>
+
+    <div class="bottom">
+
+        <span id="updateStatus">
+            Ожидание данных
+        </span>
+
+        <button class="refresh" onclick="loadWeather(true)">
+            ↻ Обновить
+        </button>
+
+    </div>
+
+    <div class="note" id="note">
+        Донецк · MET Norway
+    </div>
+
 </div>
 
-<script type="text/javascript">
-/* Совместимость со старым Safari: без fetch, Promise, let, const и стрелочных функций. */
-var LAT=48.0159, LON=37.8028;
-var currentSource="met";
-var available={met:true,open:false,wttr:false,timer:false};
-var sourceNames={met:"MET Norway",open:"Open-Meteo",wttr:"WTTR.in",timer:"7Timer"};
-var lastData=null;
-var ALT_CHECK_INTERVAL=6*60*60*1000;
-var WEATHER_INTERVAL=15*60*1000;
+<script>
 
-function byId(id){return document.getElementById(id);}
-function pad(n){return n<10?"0"+n:n;}
+/* ===================================
+   НАСТРОЙКИ
+=================================== */
 
-function updateClock(){
- var d=new Date();
- byId("hoursMinutes").innerHTML=pad(d.getHours())+":"+pad(d.getMinutes());
- byId("seconds").innerHTML=":"+pad(d.getSeconds());
- var days=["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"];
- var months=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];
- byId("date").innerHTML=days[d.getDay()]+", "+d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear();
+var LAT = 48.0159;
+var LON = 37.8028;
+
+var currentSource = "met";
+
+var available = {
+    met: true,
+    open: false,
+    wttr: false,
+    timer: false
+};
+
+var sourceNames = {
+    met: "MET Norway",
+    open: "Open-Meteo",
+    wttr: "WTTR.in",
+    timer: "7Timer"
+};
+
+var lastData = null;
+
+var WEATHER_INTERVAL = 15 * 60 * 1000;
+var ALT_CHECK_INTERVAL = 6 * 60 * 60 * 1000;
+
+
+/* ===================================
+   ЧАСЫ
+=================================== */
+
+function pad(n) {
+    return n < 10 ? "0" + n : "" + n;
 }
+
+function byId(id) {
+    return document.getElementById(id);
+}
+
+function updateClock() {
+
+    var d = new Date();
+
+    byId("hoursMinutes").innerHTML =
+        pad(d.getHours()) + ":" + pad(d.getMinutes());
+
+    byId("seconds").innerHTML =
+        ":" + pad(d.getSeconds());
+
+    var days = [
+        "воскресенье",
+        "понедельник",
+        "вторник",
+        "среда",
+        "четверг",
+        "пятница",
+        "суббота"
+    ];
+
+    var months = [
+        "января","февраля","марта",
+        "апреля","мая","июня",
+        "июля","августа","сентября",
+        "октября","ноября","декабря"
+    ];
+
+    byId("date").innerHTML =
+        days[d.getDay()] + ", " +
+        d.getDate() + " " +
+        months[d.getMonth()] + " " +
+        d.getFullYear();
+}
+
 updateClock();
-setInterval(updateClock,1000);
+setInterval(updateClock, 1000);
 
-function request(url,callback){
- var x=new XMLHttpRequest(),finished=false;
- var timer=setTimeout(function(){finish(false,null,"Тайм-аут");},18000);
- function finish(ok,data,error){
-  if(finished)return;
-  finished=true;clearTimeout(timer);
-  callback({ok:ok,data:data,error:error,status:x.status});
- }
- try{
-  x.open("GET",url,true);
-  x.timeout=17000;
-  x.onreadystatechange=function(){
-   if(x.readyState!==4)return;
-   if(x.status>=200&&x.status<300){
-    try{finish(true,JSON.parse(x.responseText),null);}
-    catch(e){finish(false,null,"Ошибка чтения ответа");}
-   }else{finish(false,null,"HTTP "+x.status);}
-  };
-  x.onerror=function(){finish(false,null,"Ошибка сети или CORS");};
-  x.ontimeout=function(){finish(false,null,"Тайм-аут");};
-  x.send(null);
- }catch(e){finish(false,null,e.message);}
-}
 
-function weatherCode(code){
- if(code===0)return "☀️ Ясно";
- if(code===1||code===2)return "🌤 Переменная облачность";
- if(code===3)return "☁️ Облачно";
- if(code===45||code===48)return "🌫 Туман";
- if(code>=51&&code<=57)return "🌦 Морось";
- if(code>=61&&code<=67)return "🌧 Дождь";
- if(code>=71&&code<=77)return "❄️ Снег";
- if(code>=80&&code<=82)return "🌧 Ливень";
- if(code>=85&&code<=86)return "🌨 Снегопад";
- if(code>=95)return "⛈ Гроза";
- return "Погода";
-}
-function metSymbol(s){
- if(!s)return "☁️";
- var n=s.toLowerCase();
- if(n.indexOf("clearsky")>=0)return "☀️";
- if(n.indexOf("fair")>=0)return "🌤";
- if(n.indexOf("partlycloudy")>=0)return "⛅";
- if(n.indexOf("cloudy")>=0)return "☁️";
- if(n.indexOf("rain")>=0||n.indexOf("sleet")>=0)return "🌧";
- if(n.indexOf("snow")>=0)return "❄️";
- if(n.indexOf("fog")>=0)return "🌫";
- if(n.indexOf("thunder")>=0)return "⛈";
- return "🌤";
-}
-function renderForecast(items){
- var out="",i,item,d;
- for(i=0;i<8;i++){
-  item=items[i];
-  if(!item)break;
-  d=new Date(item.time);
-  out+='<div class="hour"><div class="hourTime">'+pad(d.getHours())+':00</div>'+
-   '<div class="hourIcon">'+item.icon+'</div>'+
-   '<div class="hourTemp">'+Math.round(item.temp)+'°</div>'+
-   '<div class="hourRain">💧 '+(item.rain===null?"—":item.rain+"%")+'</div></div>';
- }
- byId("forecast").innerHTML=out||'<div class="hour">Прогноз временно недоступен</div>';
-}
-function renderWeather(w){
- lastData=w;
- byId("temperature").innerHTML=Math.round(w.temp)+"°";
- byId("description").innerHTML=w.description;
- byId("feels").innerHTML=(w.feels===null?"—":Math.round(w.feels))+"°";
- byId("humidity").innerHTML=(w.humidity===null?"—":Math.round(w.humidity))+"%";
- byId("wind").innerHTML=(w.wind===null?"—":w.wind.toFixed(1))+" м/с";
- byId("pressure").innerHTML=(w.pressure===null?"—":Math.round(w.pressure*0.750062))+" мм";
- renderForecast(w.hours);
- byId("sourceLabel").innerHTML="Источник: "+sourceNames[currentSource];
- byId("updateStatus").innerHTML="Обновлено: "+new Date().toLocaleTimeString();
- byId("note").innerHTML="Донецк · "+sourceNames[currentSource];
- try{localStorage.setItem("donetsk_weather_cache",JSON.stringify({source:currentSource,data:w,stamp:(new Date()).getTime()}));}catch(e){}
-}
-function showCached(){
- try{
-  var c=JSON.parse(localStorage.getItem("donetsk_weather_cache"));
-  if(c&&c.data){
-   currentSource=c.source||"met";
-   renderWeather(c.data);
-   byId("note").innerHTML="Показаны сохранённые данные · ожидаем обновление";
-  }
- }catch(e){}
-}
-function parseMet(data){
- var series=data.properties.timeseries,now=series[0],details=now.data.instant.details;
- var next=now.data.next_1_hours||now.data.next_6_hours;
- var hours=[],i,s,precip,dt;
- for(i=0;i<series.length&&hours.length<8;i++){
-  s=series[i];dt=new Date(s.time);
-  if(dt.getTime()<(new Date()).getTime()-30*60*1000)continue;
-  next=s.data.next_1_hours||s.data.next_6_hours||{};
-  precip=next.details&&typeof next.details.precipitation_amount==="number"?next.details.precipitation_amount:null;
-  hours.push({time:s.time,temp:s.data.instant.details.air_temperature,icon:metSymbol(next.summary?next.summary.symbol_code:""),rain:precip===null?null:Math.min(100,Math.round(precip*20))});
- }
- return {temp:details.air_temperature,feels:null,humidity:details.relative_humidity,wind:details.wind_speed,pressure:details.air_pressure_at_sea_level,description:"Погода MET Norway",hours:hours};
-}
-function loadMet(callback){
- var url="https://api.met.no/weatherapi/locationforecast/2.0/compact?lat="+LAT+"&lon="+LON;
- request(url,function(r){
-  if(r.ok){
-   try{callback(true,parseMet(r.data),null);}catch(e){callback(false,null,"Ошибка обработки MET Norway");}
-  }else callback(false,null,r.error);
- });
-}
-function loadOpen(callback){
- var url="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+
- "&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,pressure_msl"+
- "&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe%2FMoscow";
- request(url,function(r){
-  if(!r.ok){callback(false,null,r.error);return;}
-  try{
-   var c=r.data.current,h=r.data.hourly,arr=[],i,dt;
-   for(i=0;i<h.time.length&&arr.length<8;i++){
-    dt=new Date(h.time[i].replace(" ","T")+":00");
-    if(dt.getTime()<(new Date()).getTime()-30*60*1000)continue;
-    arr.push({time:dt.getTime(),temp:h.temperature_2m[i],icon:weatherCode(h.weather_code[i]).split(" ")[0],rain:h.precipitation_probability[i]});
-   }
-   callback(true,{temp:c.temperature_2m,feels:c.apparent_temperature,humidity:c.relative_humidity_2m,wind:c.wind_speed_10m/3.6,pressure:c.pressure_msl,description:weatherCode(c.weather_code||0),hours:arr},null);
-  }catch(e){callback(false,null,"Ошибка обработки Open-Meteo");}
- });
-}
-function loadWttr(callback){
- request("https://wttr.in/48.0159,37.8028?format=j1",function(r){
-  if(!r.ok){callback(false,null,r.error);return;}
-  try{
-   var c=r.data.current_condition[0],h=r.data.weather[0].hourly,arr=[],i;
-   for(i=0;i<h.length&&i<8;i++){
-    arr.push({time:(new Date()).getTime()+i*3600000,temp:parseFloat(h[i].tempC),icon:"🌤",rain:parseInt(h[i].chanceofrain,10)});
-   }
-   callback(true,{temp:parseFloat(c.temp_C),feels:parseFloat(c.FeelsLikeC),humidity:parseFloat(c.humidity),wind:parseFloat(c.windspeedKmph)/3.6,pressure:parseFloat(c.pressure),description:"Погода WTTR.in",hours:arr},null);
-  }catch(e){callback(false,null,"Ошибка обработки WTTR.in");}
- });
-}
-function loadTimer(callback){
- var url="https://www.7timer.info/bin/api.pl?lon="+LON+"&lat="+LAT+"&product=civil&output=json";
- request(url,function(r){
-  if(!r.ok){callback(false,null,r.error);return;}
-  try{
-   var a=r.data.dataseries,arr=[],i,d;
-   for(i=0;i<a.length&&i<8;i++){
-    d=new Date((new Date()).getTime()+i*3*3600000);
-    arr.push({time:d.getTime(),temp:a[i].temp2m,icon:"🌤",rain:null});
-   }
-   callback(true,{temp:a[0].temp2m,feels:null,humidity:null,wind:null,pressure:null,description:"Прогноз 7Timer",hours:arr},null);
-  }catch(e){callback(false,null,"Ошибка обработки 7Timer");}
- });
-}
-var loaders={met:loadMet,open:loadOpen,wttr:loadWttr,timer:loadTimer};
+/* ===================================
+   ЗАПРОСЫ К СЕРВЕРАМ
+=================================== */
 
-function drawSourceButtons(){
- var html="",k;
- for(k in available){
-  if(available[k]){
-   html+='<button class="sourceButton '+(k===currentSource?'active':'')+'" onclick="chooseSource(\''+k+'\')">'+sourceNames[k]+'</button>';
-  }
- }
- byId("sourceButtons").innerHTML=html;
-}
-function chooseSource(name){
- if(!available[name])return;
- currentSource=name;
- byId("sourceLabel").innerHTML="Источник: "+sourceNames[name];
- drawSourceButtons();
- byId("updateStatus").innerHTML="Загрузка "+sourceNames[name]+"...";
- loaders[name](function(ok,data,error){
-  if(ok){renderWeather(data);drawSourceButtons();}
-  else{
-   available[name]=false;
-   drawSourceButtons();
-   byId("note").innerHTML="Источник временно недоступен. Проверяем MET Norway.";
-   currentSource="met";
-   loadMet(function(good,d){
-    if(good){renderWeather(d);}
-    else byId("updateStatus").innerHTML="Нет соединения";
-   });
-  }
- });
-}
-function loadWeather(manual){
- byId("updateStatus").innerHTML="Обновление погоды...";
- if(!available[currentSource])currentSource="met";
- loaders[currentSource](function(ok,data,error){
-  if(ok){renderWeather(data);available[currentSource]=true;drawSourceButtons();}
-  else if(currentSource!=="met"){
-   available[currentSource]=false;drawSourceButtons();currentSource="met";
-   loadMet(function(good,d){
-    if(good){available.met=true;renderWeather(d);}
-    else{byId("updateStatus").innerHTML="Нет соединения · сохранённые данные";byId("note").innerHTML="Не удалось обновить погоду: "+(error||"ошибка сети");}
-   });
-  }else{
-   byId("updateStatus").innerHTML="Нет соединения · сохранённые данные";
-   byId("note").innerHTML="MET Norway временно недоступен. Повторим позже.";
-  }
- });
+function request(url, callback) {
+
+    var x = new XMLHttpRequest();
+    var finished = false;
+
+    var timer = setTimeout(function() {
+        finish(false, null, "Тайм-аут");
+    }, 18000);
+
+    function finish(ok, data, error) {
+
+        if (finished) return;
+
+        finished = true;
+
+        clearTimeout(timer);
+
+        callback({
+            ok: ok,
+            data: data,
+            error: error,
+            status: x.status
+        });
+    }
+
+    try {
+
+        x.open("GET", url, true);
+
+        x.timeout = 17000;
+
+        x.onreadystatechange = function() {
+
+            if (x.readyState !== 4) return;
+
+            if (x.status >= 200 && x.status < 300) {
+
+                try {
+                    finish(true, JSON.parse(x.responseText), null);
+                } catch(e) {
+                    finish(false, null, "Ошибка чтения ответа");
+                }
+
+            } else {
+
+                finish(false, null, "HTTP " + x.status);
+
+            }
+        };
+
+        x.onerror = function() {
+            finish(false, null, "Ошибка сети или CORS");
+        };
+
+        x.ontimeout = function() {
+            finish(false, null, "Тайм-аут");
+        };
+
+        x.send(null);
+
+    } catch(e) {
+
+        finish(false, null, e.message);
+
+    }
 }
 
-/* Дополнительные источники тестируются раз в 6 часов. */
-function checkAlternativeSources(){
- var names=["open","wttr","timer"];
- function testOne(index){
-  if(index>=names.length){drawSourceButtons();return;}
-  var name=names[index];
-  loaders[name](function(ok,data){
-   available[name]=!!ok;
-   testOne(index+1);
-  });
- }
- testOne(0);
+
+/* ===================================
+   ПОГОДНЫЕ ИКОНКИ
+=================================== */
+
+function weatherCode(code) {
+
+    if (code === 0) return "☀️ Ясно";
+    if (code === 1 || code === 2) return "🌤 Переменная облачность";
+    if (code === 3) return "☁️ Облачно";
+
+    if (code === 45 || code === 48) return "🌫 Туман";
+
+    if (code >= 51 && code <= 57) return "🌦 Морось";
+    if (code >= 61 && code <= 67) return "🌧 Дождь";
+
+    if (code >= 71 && code <= 77) return "❄️ Снег";
+
+    if (code >= 80 && code <= 82) return "🌧 Ливень";
+
+    if (code >= 85 && code <= 86) return "🌨 Снегопад";
+
+    if (code >= 95) return "⛈ Гроза";
+
+    return "🌤 Погода";
 }
-function scheduleAlternativeChecks(){
- var now=(new Date()).getTime(),last=0;
- try{last=parseInt(localStorage.getItem("donetsk_alt_check")||"0",10);}catch(e){}
- if(!last||now-last>ALT_CHECK_INTERVAL){
-  try{localStorage.setItem("donetsk_alt_check",String(now));}catch(e){}
-  checkAlternativeSources();
- }
- setInterval(function(){
-  try{localStorage.setItem("donetsk_alt_check",String((new Date()).getTime()));}catch(e){}
-  checkAlternativeSources();
- },ALT_CHECK_INTERVAL);
+
+function metSymbol(s) {
+
+    if (!s) return "☁️";
+
+    s = s.toLowerCase();
+
+    if (s.indexOf("clearsky") >= 0) return "☀️";
+    if (s.indexOf("fair") >= 0) return "🌤";
+    if (s.indexOf("partlycloudy") >= 0) return "⛅";
+    if (s.indexOf("cloudy") >= 0) return "☁️";
+    if (s.indexOf("rain") >= 0) return "🌧";
+    if (s.indexOf("snow") >= 0) return "❄️";
+    if (s.indexOf("fog") >= 0) return "🌫";
+    if (s.indexOf("thunder") >= 0) return "⛈";
+
+    return "🌤";
 }
+
+
+/* ===================================
+   ОТОБРАЖЕНИЕ ПРОГНОЗА
+=================================== */
+
+function renderForecast(items) {
+
+    var out = "";
+    var i;
+    var item;
+    var d;
+
+    for (i = 0; i < 8; i++) {
+
+        item = items[i];
+
+        if (!item) break;
+
+        d = new Date(item.time);
+
+        out +=
+        '<div class="hour">' +
+
+        '<div class="hourTime">' +
+        pad(d.getHours()) + ':00' +
+        '</div>' +
+
+        '<div class="hourIcon">' +
+        item.icon +
+        '</div>' +
+
+        '<div class="hourTemp">' +
+        Math.round(item.temp) + '°' +
+        '</div>' +
+
+        '<div class="hourRain">💧 ' +
+        (item.rain === null ? "—" : item.rain + "%") +
+        '</div>' +
+
+        '</div>';
+    }
+
+    byId("forecast").innerHTML =
+        out || '<div class="hour">Прогноз недоступен</div>';
+}
+
+
+/* ===================================
+   ОТОБРАЖЕНИЕ ПОГОДЫ
+=================================== */
+
+function renderWeather(w) {
+
+    lastData = w;
+
+    byId("temperature").innerHTML =
+        Math.round(w.temp) + "°";
+
+    byId("description").innerHTML =
+        w.description;
+
+    byId("feels").innerHTML =
+        (w.feels === null ? "—" : Math.round(w.feels)) + "°";
+
+    byId("humidity").innerHTML =
+        (w.humidity === null ? "—" : Math.round(w.humidity)) + "%";
+
+    byId("wind").innerHTML =
+        (w.wind === null ? "—" : w.wind.toFixed(1)) + " м/с";
+
+    byId("pressure").innerHTML =
+        (w.pressure === null ? "—" : Math.round(w.pressure * 0.750062)) + " мм";
+
+    renderForecast(w.hours);
+
+    byId("sourceLabel").innerHTML =
+        "Источник: " + sourceNames[currentSource];
+
+    byId("updateStatus").innerHTML =
+        "Обновлено: " + new Date().toLocaleTimeString();
+
+    byId("note").innerHTML =
+        "Донецк · " + sourceNames[currentSource];
+
+    try {
+
+        localStorage.setItem(
+            "donetsk_weather_cache",
+            JSON.stringify({
+                source: currentSource,
+                data: w,
+                stamp: new Date().getTime()
+            })
+        );
+
+    } catch(e) {}
+
+}
+
+
+/* ===================================
+   СОХРАНЁННЫЕ ДАННЫЕ
+=================================== */
+
+function showCached() {
+
+    try {
+
+        var c = JSON.parse(
+            localStorage.getItem("donetsk_weather_cache")
+        );
+
+        if (c && c.data) {
+
+            currentSource = c.source || "met";
+
+            renderWeather(c.data);
+
+            byId("note").innerHTML =
+                "Сохранённые данные · ожидаем обновление";
+
+        }
+
+    } catch(e) {}
+
+}
+
+
+/* ===================================
+   MET NORWAY
+   ОСНОВНОЙ ИСТОЧНИК
+=================================== */
+
+function parseMet(data) {
+
+    var series = data.properties.timeseries;
+
+    var now = series[0];
+
+    var details = now.data.instant.details;
+
+    var hours = [];
+
+    var i;
+    var s;
+    var next;
+    var precip;
+    var dt;
+
+    for (i = 0; i < series.length && hours.length < 8; i++) {
+
+        s = series[i];
+
+        dt = new Date(s.time);
+
+        if (dt.getTime() < new Date().getTime() - 30 * 60 * 1000) {
+            continue;
+        }
+
+        next = s.data.next_1_hours || s.data.next_6_hours || {};
+
+        precip = null;
+
+        if (
+            next.details &&
+            typeof next.details.precipitation_amount === "number"
+        ) {
+            precip = next.details.precipitation_amount;
+        }
+
+        hours.push({
+
+            time: s.time,
+
+            temp: s.data.instant.details.air_temperature,
+
+            icon: metSymbol(
+                next.summary ? next.summary.symbol_code : ""
+            ),
+
+            rain: precip === null
+                ? null
+                : Math.min(100, Math.round(precip * 20))
+
+        });
+    }
+
+    return {
+
+        temp: details.air_temperature,
+
+        feels: null,
+
+        humidity: details.relative_humidity,
+
+        wind: details.wind_speed,
+
+        pressure: details.air_pressure_at_sea_level,
+
+        description: "☁ Погода MET Norway",
+
+        hours: hours
+    };
+}
+
+function loadMet(callback) {
+
+    var url =
+        "https://api.met.no/weatherapi/locationforecast/2.0/compact" +
+        "?lat=" + LAT + "&lon=" + LON;
+
+    request(url, function(r) {
+
+        if (r.ok) {
+
+            try {
+
+                callback(true, parseMet(r.data), null);
+
+            } catch(e) {
+
+                callback(false, null, "Ошибка обработки MET Norway");
+
+            }
+
+        } else {
+
+            callback(false, null, r.error);
+
+        }
+
+    });
+}
+
+
+/* ===================================
+   OPEN-METEO
+=================================== */
+
+function loadOpen(callback) {
+
+    var url =
+        "https://api.open-meteo.com/v1/forecast" +
+        "?latitude=" + LAT +
+        "&longitude=" + LON +
+        "&current=temperature_2m,relative_humidity_2m,apparent_temperature,wind_speed_10m,pressure_msl,weather_code" +
+        "&hourly=temperature_2m,precipitation_probability,weather_code" +
+        "&forecast_days=2&timezone=Europe%2FMoscow";
+
+    request(url, function(r) {
+
+        if (!r.ok) {
+            callback(false, null, r.error);
+            return;
+        }
+
+        try {
+
+            var c = r.data.current;
+            var h = r.data.hourly;
+
+            var arr = [];
+            var i;
+            var dt;
+
+            for (i = 0; i < h.time.length && arr.length < 8; i++) {
+
+                dt = new Date(h.time[i].replace(" ", "T") + ":00");
+
+                if (dt.getTime() < new Date().getTime() - 30 * 60 * 1000) {
+                    continue;
+                }
+
+                arr.push({
+
+                    time: dt.getTime(),
+
+                    temp: h.temperature_2m[i],
+
+                    icon: weatherCode(h.weather_code[i]).split(" ")[0],
+
+                    rain: h.precipitation_probability[i]
+
+                });
+            }
+
+            callback(true, {
+
+                temp: c.temperature_2m,
+
+                feels: c.apparent_temperature,
+
+                humidity: c.relative_humidity_2m,
+
+                wind: c.wind_speed_10m / 3.6,
+
+                pressure: c.pressure_msl,
+
+                description: weatherCode(c.weather_code),
+
+                hours: arr
+
+            }, null);
+
+        } catch(e) {
+
+            callback(false, null, "Ошибка Open-Meteo");
+
+        }
+
+    });
+}
+
+
+/* ===================================
+   WTTR.IN
+=================================== */
+
+function loadWttr(callback) {
+
+    request(
+        "https://wttr.in/48.0159,37.8028?format=j1",
+
+        function(r) {
+
+            if (!r.ok) {
+                callback(false, null, r.error);
+                return;
+            }
+
+            try {
+
+                var c = r.data.current_condition[0];
+
+                var h = r.data.weather[0].hourly;
+
+                var arr = [];
+
+                var i;
+
+                for (i = 0; i < h.length && i < 8; i++) {
+
+                    arr.push({
+
+                        time: new Date().getTime() + i * 3600000,
+
+                        temp: parseFloat(h[i].tempC),
+
+                        icon: "🌤",
+
+                        rain: parseInt(h[i].chanceofrain, 10)
+
+                    });
+
+                }
+
+                callback(true, {
+
+                    temp: parseFloat(c.temp_C),
+
+                    feels: parseFloat(c.FeelsLikeC),
+
+                    humidity: parseFloat(c.humidity),
+
+                    wind: parseFloat(c.windspeedKmph) / 3.6,
+
+                    pressure: parseFloat(c.pressure),
+
+                    description: "Погода WTTR.in",
+
+                    hours: arr
+
+                }, null);
+
+            } catch(e) {
+
+                callback(false, null, "Ошибка WTTR.in");
+
+            }
+
+        }
+    );
+}
+
+
+/* ===================================
+   7TIMER
+=================================== */
+
+function loadTimer(callback) {
+
+    var url =
+        "https://www.7timer.info/bin/api.pl" +
+        "?lon=" + LON +
+        "&lat=" + LAT +
+        "&product=civil&output=json";
+
+    request(url, function(r) {
+
+        if (!r.ok) {
+            callback(false, null, r.error);
+            return;
+        }
+
+        try {
+
+            var a = r.data.dataseries;
+
+            var arr = [];
+
+            var i;
+            var d;
+
+            for (i = 0; i < a.length && i < 8; i++) {
+
+                d = new Date(
+                    new Date().getTime() + i * 3 * 3600000
+                );
+
+                arr.push({
+
+                    time: d.getTime(),
+
+                    temp: a[i].temp2m,
+
+                    icon: "🌤",
+
+                    rain: null
+
+                });
+
+            }
+
+            callback(true, {
+
+                temp: a[0].temp2m,
+
+                feels: null,
+
+                humidity: null,
+
+                wind: null,
+
+                pressure: null,
+
+                description: "Прогноз 7Timer",
+
+                hours: arr
+
+            }, null);
+
+        } catch(e) {
+
+            callback(false, null, "Ошибка 7Timer");
+
+        }
+
+    });
+}
+
+
+/* ===================================
+   СПИСОК ИСТОЧНИКОВ
+=================================== */
+
+var loaders = {
+
+    met: loadMet,
+
+    open: loadOpen,
+
+    wttr: loadWttr,
+
+    timer: loadTimer
+
+};
+
+function drawSourceButtons() {
+
+    var html = "";
+
+    var k;
+
+    for (k in available) {
+
+        if (available[k]) {
+
+            html +=
+            '<button class="sourceButton ' +
+            (k === currentSource ? 'active' : '') +
+            '" onclick="chooseSource(\'' + k + '\')">' +
+            sourceNames[k] +
+            '</button>';
+
+        }
+
+    }
+
+    byId("sourceButtons").innerHTML = html;
+
+}
+
+
+/* ===================================
+   ВЫБОР ИСТОЧНИКА
+=================================== */
+
+function chooseSource(name) {
+
+    if (!available[name]) return;
+
+    currentSource = name;
+
+    byId("sourceLabel").innerHTML =
+        "Источник: " + sourceNames[name];
+
+    drawSourceButtons();
+
+    byId("updateStatus").innerHTML =
+        "Загрузка " + sourceNames[name] + "...";
+
+    loaders[name](function(ok, data, error) {
+
+        if (ok) {
+
+            renderWeather(data);
+
+            drawSourceButtons();
+
+        } else {
+
+            available[name] = false;
+
+            drawSourceButtons();
+
+            byId("note").innerHTML =
+                "Источник недоступен. Переключение на MET Norway.";
+
+            currentSource = "met";
+
+            loadMet(function(good, d) {
+
+                if (good) {
+
+                    renderWeather(d);
+
+                } else {
+
+                    byId("updateStatus").innerHTML =
+                        "Нет соединения";
+
+                }
+
+            });
+
+        }
+
+    });
+
+}
+
+
+/* ===================================
+   ОБНОВЛЕНИЕ ПОГОДЫ
+=================================== */
+
+function loadWeather(manual) {
+
+    byId("updateStatus").innerHTML =
+        "Обновление погоды...";
+
+    if (!available[currentSource]) {
+        currentSource = "met";
+    }
+
+    loaders[currentSource](function(ok, data, error) {
+
+        if (ok) {
+
+            available[currentSource] = true;
+
+            renderWeather(data);
+
+            drawSourceButtons();
+
+        } else if (currentSource !== "met") {
+
+            available[currentSource] = false;
+
+            drawSourceButtons();
+
+            currentSource = "met";
+
+            loadMet(function(good, d) {
+
+                if (good) {
+
+                    renderWeather(d);
+
+                } else {
+
+                    byId("updateStatus").innerHTML =
+                        "Нет соединения · сохранённые данные";
+
+                }
+
+            });
+
+        } else {
+
+            byId("updateStatus").innerHTML =
+                "Нет соединения · сохранённые данные";
+
+            byId("note").innerHTML =
+                "MET Norway временно недоступен. Повторим позже.";
+
+        }
+
+    });
+
+}
+
+
+/* ===================================
+   ПРОВЕРКА ДОПОЛНИТЕЛЬНЫХ СЕРВИСОВ
+=================================== */
+
+function checkAlternativeSources() {
+
+    var names = ["open", "wttr", "timer"];
+
+    function testOne(index) {
+
+        if (index >= names.length) {
+
+            drawSourceButtons();
+
+            return;
+
+        }
+
+        var name = names[index];
+
+        loaders[name](function(ok, data) {
+
+            available[name] = !!ok;
+
+            testOne(index + 1);
+
+        });
+
+    }
+
+    testOne(0);
+
+}
+
+
+/* ===================================
+   ПЕРИОДИЧЕСКАЯ ПРОВЕРКА
+=================================== */
+
+function scheduleAlternativeChecks() {
+
+    var now = new Date().getTime();
+
+    var last = 0;
+
+    try {
+
+        last = parseInt(
+            localStorage.getItem("donetsk_alt_check") || "0",
+            10
+        );
+
+    } catch(e) {}
+
+    if (!last || now - last > ALT_CHECK_INTERVAL) {
+
+        try {
+
+            localStorage.setItem(
+                "donetsk_alt_check",
+                String(now)
+            );
+
+        } catch(e) {}
+
+        checkAlternativeSources();
+
+    }
+
+    setInterval(function() {
+
+        try {
+
+            localStorage.setItem(
+                "donetsk_alt_check",
+                String(new Date().getTime())
+            );
+
+        } catch(e) {}
+
+        checkAlternativeSources();
+
+    }, ALT_CHECK_INTERVAL);
+
+}
+
+
+/* ===================================
+   ЗАПУСК
+=================================== */
 
 showCached();
+
 drawSourceButtons();
+
 loadWeather(false);
+
 scheduleAlternativeChecks();
-setInterval(function(){loadWeather(false);},WEATHER_INTERVAL);
+
+setInterval(function() {
+
+    loadWeather(false);
+
+}, WEATHER_INTERVAL);
+
 </script>
+
 </body>
 </html>
