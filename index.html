@@ -1,62 +1,1073 @@
-<!doctype html>
-<html lang="ru"><head><meta charset="utf-8">
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
-<meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="theme-color" content="#090018"><title>Донецк · Неоновые часы</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#090018">
+<title>Донецк · Neon Weather</title>
+
 <style>
-:root{--p:#d94cff;--w:#fffaff}*{box-sizing:border-box}html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#080014;color:var(--w);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
-body{background:radial-gradient(ellipse at 50% 35%,#4b008866,transparent 45%),radial-gradient(ellipse at 15% 80%,#a0007755,transparent 40%),linear-gradient(#080014,#19002e 55%,#070014)}
-.sky{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 12%,#8b20ff22,transparent 45%)}
-.sky:before{content:"";position:absolute;left:-2%;right:-2%;bottom:18%;height:30%;opacity:.8;background:repeating-linear-gradient(90deg,transparent 0 17px,#ff65ff33 18px 20px,transparent 21px 39px);clip-path:polygon(0 45%,4% 45%,4% 18%,8% 18%,8% 55%,12% 55%,12% 30%,16% 30%,16% 4%,20% 4%,20% 48%,25% 48%,25% 25%,29% 25%,29% 60%,34% 60%,34% 15%,39% 15%,39% 47%,44% 47%,44% 27%,49% 27%,49% 52%,54% 52%,54% 10%,59% 10%,59% 43%,64% 43%,64% 20%,69% 20%,69% 57%,74% 57%,74% 28%,79% 28%,79% 48%,84% 48%,84% 12%,89% 12%,89% 51%,94% 51%,94% 26%,100% 26%,100% 100%,0 100%)}
-.sky:after{content:"";position:absolute;left:0;right:0;bottom:17%;height:2px;background:#d52cff;box-shadow:0 0 15px 5px #9d00ff,0 0 45px 12px #b300ff88}
-.wrap{position:relative;z-index:1;height:100%;padding:clamp(10px,3vw,38px);display:flex;flex-direction:column;justify-content:space-between;text-align:center}
-.top{display:flex;justify-content:space-between;text-align:left;font-weight:600;letter-spacing:.08em;text-shadow:0 0 12px var(--p)}.brand{font-size:clamp(16px,2.2vw,30px);color:#f7caff}.date{font-size:clamp(12px,1.5vw,20px);letter-spacing:0;margin-top:5px}.live{text-align:right;font-size:clamp(12px,1.6vw,21px);color:#f1b5ff}.live small{display:block;color:white;font-size:.85em;margin-top:5px}
-.clockrow{display:flex;align-items:center;justify-content:center;white-space:nowrap;width:100%;line-height:.9}.clock{font-size:clamp(90px,24vw,270px);font-weight:300;letter-spacing:-.065em;color:white;text-shadow:0 0 5px white,0 0 18px #e6a2ff,0 0 38px #b400ff,0 0 75px #7900ff}.seconds{font-size:clamp(22px,5vw,58px);font-weight:300;margin:35px 0 0 12px;color:#f4c9ff;text-shadow:0 0 18px #c000ff}
-.weather{text-shadow:0 0 12px #c65aff99}.temp{font-size:clamp(38px,7vw,76px);font-weight:600}.icon{font-size:clamp(34px,5vw,58px);vertical-align:middle;margin-right:12px;filter:drop-shadow(0 0 10px #d800ff)}.description{font-size:clamp(17px,2.2vw,27px);margin-top:6px}
-.metrics{display:flex;justify-content:center;flex-wrap:wrap;gap:clamp(10px,2.2vw,28px);font-size:clamp(13px,1.8vw,22px);margin:16px auto 0}.metric{white-space:nowrap}
-.section-title{display:flex;align-items:center;gap:18px;justify-content:center;color:#f5caff;font-size:clamp(14px,2vw,24px);letter-spacing:.16em;margin:12px 0 14px;text-shadow:0 0 12px #c000ff}.section-title:before,.section-title:after{content:"";height:2px;flex:1;max-width:28%;background:linear-gradient(90deg,transparent,#ed45ff);box-shadow:0 0 10px #d000ff}.section-title:after{transform:scaleX(-1)}
-.hours{display:flex;gap:8px;width:100%;justify-content:space-between}.hour{flex:1;min-width:0;border:1px solid #d83cff;border-radius:17px;padding:12px 4px 10px;background:linear-gradient(160deg,#46007877,#0c0023bb);box-shadow:0 0 8px #a900ff,inset 0 0 15px #bf23ff29;text-shadow:0 0 9px #ad42ff}.hourtime{font-size:clamp(12px,1.8vw,21px);font-weight:700}.houricon{font-size:clamp(21px,3vw,34px);margin:8px 0}.hourtemp{font-size:clamp(16px,2.2vw,25px);font-weight:700}.rain{font-size:clamp(10px,1.35vw,16px);margin-top:7px;color:#aeeaff}
-.bottom{display:flex;align-items:center;justify-content:space-between;gap:12px;font-size:clamp(12px,1.5vw,18px);color:#e9caff}button{border:1px solid #f3a1ff;border-radius:30px;padding:12px 26px;color:white;background:linear-gradient(120deg,#7000d9,#a000ff);font-size:clamp(14px,1.6vw,19px);box-shadow:0 0 12px #bd00ff,0 0 30px #b100ff80;cursor:pointer}button:disabled{opacity:.5}.status{font-size:12px;color:#d9baff;text-align:center;min-height:16px;margin-top:7px}.source{font-size:12px;color:#d8b8ff;text-align:right}
-@media(max-width:650px){.wrap{padding:12px 9px}.clock{font-size:clamp(72px,21vw,145px)}.seconds{font-size:clamp(18px,5vw,32px);margin-left:7px}.hours{gap:4px}.hour{border-radius:10px;padding:8px 1px}.metrics{gap:8px 12px}.bottom{font-size:11px}button{padding:10px 16px}}
-@media(max-height:560px){.wrap{padding:8px 18px}.clock{font-size:min(22vw,34vh)}.temp{font-size:34px}.icon{font-size:30px}.description{font-size:15px}.metrics{margin-top:8px}.section-title{margin:7px 0}.hour{padding:7px 3px}.houricon{margin:3px 0}}
+:root {
+ --purple:#d94cff;
+ --pink:#ff75ff;
+ --white:#fffaff;
+ --blue:#70dfff;
+}
 
-/* Совместимость со старым Safari на iPad mini 1 (iOS 9) */
+* {box-sizing:border-box}
+
+html,body {
+ margin:0;
+ width:100%;
+ height:100%;
+ overflow:hidden;
+ background:#080014;
+ color:var(--white);
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+.weather-bg {
+ position:fixed;
+ inset:0;
+ z-index:0;
+ background-color:#100020;
+ background-image:
+ url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1920&q=85");
+ background-size:cover;
+ background-position:center;
+ transition:opacity 1s ease;
+}
+
+.weather-overlay {
+ position:fixed;
+ inset:0;
+ z-index:1;
+ pointer-events:none;
+ background:
+ linear-gradient(180deg,rgba(8,0,25,.48),rgba(12,0,30,.62)),
+ radial-gradient(ellipse at 50% 35%,rgba(125,0,255,.30),transparent 65%);
+}
+
+.sky {
+ position:fixed;
+ inset:0;
+ z-index:1;
+ pointer-events:none;
+ background:
+ radial-gradient(ellipse at 50% 15%,#a000ff22,transparent 45%),
+ radial-gradient(ellipse at 50% 90%,#d000ff22,transparent 40%);
+}
+
+.sky:after {
+ content:"";
+ position:absolute;
+ left:0;
+ right:0;
+ bottom:15%;
+ height:2px;
+ background:#d52cff;
+ box-shadow:0 0 15px 5px #9d00ff,
+            0 0 45px 12px #b300ff88;
+}
+
+.wrap {
+ position:relative;
+ z-index:2;
+ height:100%;
+ padding:clamp(10px,3vw,38px);
+ display:flex;
+ flex-direction:column;
+ justify-content:space-between;
+ text-align:center;
+}
+
+.top {
+ display:flex;
+ justify-content:space-between;
+ text-align:left;
+ font-weight:600;
+ letter-spacing:.08em;
+ text-shadow:0 0 12px var(--purple);
+}
+
+.brand {
+ font-size:clamp(16px,2.2vw,30px);
+ color:#f7caff;
+}
+
+.date {
+ font-size:clamp(12px,1.5vw,20px);
+ letter-spacing:0;
+ margin-top:5px;
+}
+
+.live {
+ text-align:right;
+ font-size:clamp(12px,1.6vw,21px);
+ color:#f1b5ff;
+}
+
+.live small {
+ display:block;
+ color:white;
+ font-size:.85em;
+ margin-top:5px;
+}
+
+.clockrow {
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ white-space:nowrap;
+ width:100%;
+ line-height:.9;
+}
+
+.clock {
+ font-size:clamp(90px,24vw,270px);
+ font-weight:300;
+ letter-spacing:-.065em;
+ color:white;
+ text-shadow:
+ 0 0 5px white,
+ 0 0 18px #e6a2ff,
+ 0 0 38px #b400ff,
+ 0 0 75px #7900ff;
+}
+
+.seconds {
+ font-size:clamp(22px,5vw,58px);
+ font-weight:300;
+ margin:35px 0 0 12px;
+ color:#f4c9ff;
+ text-shadow:0 0 18px #c000ff;
+}
+
+.weather {
+ text-shadow:0 0 12px #c65aff99;
+}
+
+.temp {
+ font-size:clamp(38px,7vw,76px);
+ font-weight:600;
+}
+
+.icon {
+ font-size:clamp(34px,5vw,58px);
+ vertical-align:middle;
+ margin-right:12px;
+ filter:drop-shadow(0 0 10px #d800ff);
+}
+
+.description {
+ font-size:clamp(17px,2.2vw,27px);
+ margin-top:6px;
+}
+
+.metrics {
+ display:flex;
+ justify-content:center;
+ flex-wrap:wrap;
+ gap:clamp(10px,2.2vw,28px);
+ font-size:clamp(13px,1.8vw,22px);
+ margin:16px auto 0;
+}
+
+.metric {white-space:nowrap}
+
+.section-title {
+ display:flex;
+ align-items:center;
+ gap:18px;
+ justify-content:center;
+ color:#f5caff;
+ font-size:clamp(14px,2vw,24px);
+ letter-spacing:.16em;
+ margin:12px 0 14px;
+ text-shadow:0 0 12px #c000ff;
+}
+
+.section-title:before,
+.section-title:after {
+ content:"";
+ height:2px;
+ flex:1;
+ max-width:28%;
+ background:linear-gradient(90deg,transparent,#ed45ff);
+ box-shadow:0 0 10px #d000ff;
+}
+
+.section-title:after {transform:scaleX(-1)}
+
+.hours {
+ display:flex;
+ gap:8px;
+ width:100%;
+ justify-content:space-between;
+}
+
+.hour {
+ flex:1;
+ min-width:0;
+ border:1px solid #d83cff;
+ border-radius:17px;
+ padding:12px 4px 10px;
+ background:linear-gradient(160deg,#460078aa,#0c0023dd);
+ box-shadow:0 0 8px #a900ff,
+ inset 0 0 15px #bf23ff29;
+ text-shadow:0 0 9px #ad42ff;
+}
+
+.hourtime {
+ font-size:clamp(12px,1.8vw,21px);
+ font-weight:700;
+}
+
+.houricon {
+ font-size:clamp(21px,3vw,34px);
+ margin:8px 0;
+}
+
+.hourtemp {
+ font-size:clamp(16px,2.2vw,25px);
+ font-weight:700;
+}
+
+.rain {
+ font-size:clamp(10px,1.35vw,16px);
+ margin-top:7px;
+ color:#aeeaff;
+}
+
+.bottom {
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:12px;
+ font-size:clamp(12px,1.5vw,18px);
+ color:#e9caff;
+}
+
+button {
+ border:1px solid #f3a1ff;
+ border-radius:30px;
+ padding:12px 26px;
+ color:white;
+ background:linear-gradient(120deg,#7000d9,#a000ff);
+ font-size:clamp(14px,1.6vw,19px);
+ box-shadow:0 0 12px #bd00ff,
+            0 0 30px #b100ff80;
+ cursor:pointer;
+}
+
+button:disabled {opacity:.5}
+
+.status {
+ font-size:12px;
+ color:#d9baff;
+ text-align:center;
+ min-height:16px;
+ margin-top:7px;
+}
+
+.source {
+ font-size:12px;
+ color:#d8b8ff;
+ text-align:right;
+}
+
+@media(max-width:650px) {
+ .wrap {padding:12px 9px}
+ .clock {font-size:clamp(72px,21vw,145px)}
+ .seconds {font-size:clamp(18px,5vw,32px);margin-left:7px}
+ .hours {gap:4px}
+ .hour {border-radius:10px;padding:8px 1px}
+ .metrics {gap:8px 12px}
+ .bottom {font-size:11px}
+ button {padding:10px 16px}
+}
+
+@media(max-height:560px) {
+ .wrap {padding:8px 18px}
+ .clock {font-size:min(22vw,34vh)}
+ .temp {font-size:34px}
+ .icon {font-size:30px}
+ .description {font-size:15px}
+ .metrics {margin-top:8px}
+ .section-title {margin:7px 0}
+ .hour {padding:7px 3px}
+ .houricon {margin:3px 0}
+}
+
+/* Старый Safari */
+
 @supports not (font-size:clamp(1px,2px,3px)) {
- .brand{font-size:22px}.date{font-size:15px}.live{font-size:16px}
- .clock{font-size:22vw}.seconds{font-size:5vw}
- .temp{font-size:7vw}.icon{font-size:5vw}.description{font-size:22px}
- .metrics{font-size:17px;gap:14px;margin-top:12px}
- .section-title{font-size:18px;margin:10px 0 12px}
- .hourtime{font-size:17px}.houricon{font-size:28px}.hourtemp{font-size:21px}.rain{font-size:13px}
- .bottom{font-size:15px}button{font-size:16px}
+ .brand {font-size:22px}
+ .date {font-size:15px}
+ .live {font-size:16px}
+ .clock {font-size:22vw}
+ .seconds {font-size:5vw}
+ .temp {font-size:7vw}
+ .icon {font-size:5vw}
+ .description {font-size:22px}
+ .metrics {font-size:17px;margin-top:12px}
+ .section-title {font-size:18px;margin:10px 0 12px}
+ .hourtime {font-size:17px}
+ .houricon {font-size:28px}
+ .hourtemp {font-size:21px}
+ .rain {font-size:13px}
+ .bottom {font-size:15px}
+ button {font-size:16px}
 }
-@supports not (clip-path:polygon(0 0,100% 0,100% 100%,0 100%)) {
- .sky:before{display:none}
-}
+</style>
+</head>
 
-</style></head><body><div class="sky"></div><main class="wrap">
-<header class="top"><div><div class="brand">ДОНЕЦК · ДНР</div><div class="date" id="date">Загрузка даты…</div></div><div class="live">LIVE WEATHER<small id="sourceName">ПОДКЛЮЧЕНИЕ…</small></div></header>
-<section class="clockrow"><div class="clock" id="clock">00:00</div><div class="seconds" id="seconds">00</div></section>
-<section class="weather"><div class="temp"><span class="icon" id="currentIcon">🌙</span><span id="temperature">--°</span></div><div class="description" id="description">Загрузка погоды…</div>
-<div class="metrics"><div class="metric">🌡️ Ощущается: <b id="feels">—°</b></div><div class="metric">💧 Влажность: <b id="humidity">—%</b></div><div class="metric">💨 Ветер: <b id="wind">— м/с</b></div><div class="metric">🧭 Давление: <b id="pressure">— мм</b></div></div></section>
-<section><div class="section-title">ПРОГНОЗ НА БЛИЖАЙШИЕ 8 ЧАСОВ</div><div class="hours" id="hours"><div class="hour">Загрузка…</div></div></section>
-<footer><div class="bottom"><div id="updated">Обновлено: —</div><button id="refresh" type="button">⟳ Обновить</button><div class="source" id="footerSource">Донецк · погода</div></div><div class="status" id="status">Подключаемся к погодному сервису…</div></footer>
+<body>
+
+<div class="weather-bg" id="weatherBg"></div>
+<div class="weather-overlay"></div>
+<div class="sky"></div>
+
+<main class="wrap">
+
+<header class="top">
+ <div>
+  <div class="brand">ДОНЕЦК · ДНР</div>
+  <div class="date" id="date">Загрузка даты...</div>
+ </div>
+
+ <div class="live">
+  LIVE WEATHER
+  <small id="sourceName">ПОДКЛЮЧЕНИЕ...</small>
+ </div>
+</header>
+
+<section class="clockrow">
+ <div class="clock" id="clock">00:00</div>
+ <div class="seconds" id="seconds">00</div>
+</section>
+
+<section class="weather">
+
+ <div class="temp">
+  <span class="icon" id="currentIcon">🌙</span>
+  <span id="temperature">--°</span>
+ </div>
+
+ <div class="description" id="description">
+  Загрузка погоды...
+ </div>
+
+ <div class="metrics">
+  <div class="metric">🌡️ Ощущается: <b id="feels">—°</b></div>
+  <div class="metric">💧 Влажность: <b id="humidity">—%</b></div>
+  <div class="metric">💨 Ветер: <b id="wind">— м/с</b></div>
+  <div class="metric">🧭 Давление: <b id="pressure">— мм</b></div>
+ </div>
+
+</section>
+
+<section>
+ <div class="section-title">
+  ПРОГНОЗ НА БЛИЖАЙШИЕ 8 ЧАСОВ
+ </div>
+
+ <div class="hours" id="hours">
+  <div class="hour">Загрузка...</div>
+ </div>
+</section>
+
+<footer>
+
+ <div class="bottom">
+  <div id="updated">Обновлено: —</div>
+
+  <button id="refresh" type="button">
+   ⟳ Обновить
+  </button>
+
+  <div class="source" id="footerSource">
+   Донецк · погода
+  </div>
+ </div>
+
+ <div class="status" id="status">
+  Подключаемся к погодному сервису...
+ </div>
+
+</footer>
+
 </main>
+
 <script>
 (function(){
-var LAT=48.0159,LON=37.8028,CACHE="donetsk_weather_v3",busy=false;
-function el(id){return document.getElementById(id)}function pad(n){return n<10?"0"+n:n}
-function clock(){var d=new Date(),days=["воскресенье","понедельник","вторник","среда","четверг","пятница","суббота"],months=["января","февраля","марта","апреля","мая","июня","июля","августа","сентября","октября","ноября","декабря"];el("clock").innerHTML=pad(d.getHours())+":"+pad(d.getMinutes());el("seconds").innerHTML=pad(d.getSeconds());el("date").innerHTML=days[d.getDay()]+", "+d.getDate()+" "+months[d.getMonth()]+" "+d.getFullYear()}
-clock();setInterval(clock,1000);
-function xhr(url,cb){var x=new XMLHttpRequest();x.open("GET",url,true);x.timeout=14000;x.onreadystatechange=function(){if(x.readyState===4){if(x.status>=200&&x.status<300){try{cb(null,JSON.parse(x.responseText))}catch(e){cb(e)}}else cb(new Error("HTTP "+x.status))}};x.onerror=function(){cb(new Error("Сеть/CORS"))};x.ontimeout=function(){cb(new Error("Тайм-аут"))};try{x.send(null)}catch(e){cb(e)}}
-function wx(c){if(c===0)return["Ясно","☀️"];if(c===1)return["Преимущественно ясно","🌤️"];if(c===2)return["Переменная облачность","⛅"];if(c===3)return["Облачно","☁️"];if(c===45||c===48)return["Туман","🌫️"];if(c>=51&&c<=67)return["Дождь/морось","🌧️"];if(c>=71&&c<=77||c===85||c===86)return["Снег","🌨️"];if(c>=80&&c<=82)return["Ливень","🌧️"];if(c>=95)return["Гроза","⛈️"];return["Погодные условия","🌙"]}
-function metCode(s){if(!s)return 3;if(s.indexOf("thunder")>=0)return 95;if(s.indexOf("snow")>=0)return 71;if(s.indexOf("rain")>=0||s.indexOf("sleet")>=0)return 61;if(s.indexOf("fog")>=0)return 45;if(s.indexOf("clearsky")>=0)return 0;if(s.indexOf("partlycloudy")>=0)return 2;if(s.indexOf("fair")>=0)return 1;return 3}
-function render(d,source){el("temperature").innerHTML=Math.round(d.temp)+"°";el("currentIcon").innerHTML=d.icon;el("description").innerHTML=d.description+" · "+source;el("feels").innerHTML=Math.round(d.feels)+"°";el("humidity").innerHTML=Math.round(d.humidity)+"%";el("wind").innerHTML=(d.wind).toFixed(1)+" м/с";el("pressure").innerHTML=d.pressure?Math.round(d.pressure*.750062)+" мм":"— мм";el("sourceName").innerHTML=source;el("footerSource").innerHTML="Донецк · "+source;el("updated").innerHTML="Обновлено: "+new Date().toLocaleTimeString("ru-RU",{hour:"2-digit",minute:"2-digit"});var h="",i,it,dt,w;for(i=0;i<d.hours.length&&i<8;i++){it=d.hours[i];dt=new Date(it.time);w=wx(it.code);h+='<div class="hour"><div class="hourtime">'+pad(dt.getHours())+':00</div><div class="houricon">'+w[1]+'</div><div class="hourtemp">'+Math.round(it.temp)+'°</div><div class="rain">💧 '+Math.round(it.rain||0)+'%</div></div>'}el("hours").innerHTML=h||'<div class="hour">Прогноз недоступен</div>';el("status").innerHTML="Данные получены · автообновление каждые 30 минут";try{localStorage.setItem(CACHE,JSON.stringify({data:d,source:source}))}catch(e){}}
-function met(cb){xhr("https://api.met.no/weatherapi/locationforecast/2.0/compact?lat="+LAT+"&lon="+LON,function(err,j){if(err){cb(err);return}try{var a=j.properties.timeseries,now=Date.now(),first=null,hs=[],i,t,dt,ins,period,code,rain;for(i=0;i<a.length;i++){t=a[i];dt=new Date(t.time).getTime();ins=t.data.instant.details;period=t.data.next_1_hours||t.data.next_6_hours||t.data.next_12_hours;code=period&&period.summary?metCode(period.summary.symbol_code):3;if(!first&&dt>=now-3600000)first={temp:ins.air_temperature,feels:ins.air_temperature,humidity:ins.relative_humidity,wind:ins.wind_speed,pressure:ins.air_pressure_at_sea_level,description:wx(code)[0],icon:wx(code)[1]};if(dt>=now-3600000&&hs.length<8){rain=period&&period.details?period.details.precipitation_amount:0;hs.push({time:t.time,temp:ins.air_temperature,code:code,rain:rain})}}if(!first)throw new Error("MET: нет текущих данных");first.hours=hs;cb(null,first)}catch(e){cb(e)}})}
-function openMeteo(cb){var u="https://api.open-meteo.com/v1/forecast?latitude="+LAT+"&longitude="+LON+"&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,pressure_msl,wind_speed_10m&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe%2FMoscow";xhr(u,function(err,j){if(err){cb(err);return}try{var c=j.current,a=j.hourly,now=Date.now(),idx=0,i,hs=[],tm;for(i=0;i<a.time.length;i++){tm=new Date(a.time[i]).getTime();if(tm>=now-3600000){idx=i;break}}for(i=idx;i<idx+8&&i<a.time.length;i++)hs.push({time:a.time[i],temp:a.temperature_2m[i],code:a.weather_code[i],rain:a.precipitation_probability[i]});var w=wx(c.weather_code);cb(null,{temp:c.temperature_2m,feels:c.apparent_temperature,humidity:c.relative_humidity_2m,wind:c.wind_speed_10m/3.6,pressure:c.pressure_msl,description:w[0],icon:w[1],hours:hs})}catch(e){cb(e)}})}
-function done(){busy=false;el("refresh").disabled=false}
-function load(){if(busy)return;busy=true;el("refresh").disabled=true;el("status").innerHTML="Проверяем MET Norway…";met(function(e,d){if(!e){render(d,"MET Norway");done();return}el("status").innerHTML="MET Norway недоступен · пробуем резервный источник…";openMeteo(function(e2,d2){if(!e2){render(d2,"Open-Meteo");el("status").innerHTML="MET Norway недоступен · показаны актуальные данные Open-Meteo";done();return}var old=null;try{old=JSON.parse(localStorage.getItem(CACHE)||"null")}catch(x){}if(old&&old.data){render(old.data,old.source+" · кэш");el("status").innerHTML="Нет связи · показаны последние сохранённые данные"}else{el("temperature").innerHTML="—°";el("description").innerHTML="Нет соединения с погодными сервисами";el("hours").innerHTML='<div class="hour">Нет данных</div>';el("status").innerHTML="Проверьте Wi‑Fi и нажмите «Обновить»"}done()})})}
-el("refresh").onclick=load;load();setInterval(function(){if(!document.hidden)load()},1800000);
-if(navigator.wakeLock&&navigator.wakeLock.request){navigator.wakeLock.request("screen").catch(function(){});document.addEventListener("visibilitychange",function(){if(!document.hidden)navigator.wakeLock.request("screen").catch(function(){})})}
+
+var LAT=48.0159;
+var LON=37.8028;
+
+var CACHE="donetsk_weather_v4";
+var busy=false;
+
+function el(id) {
+ return document.getElementById(id);
+}
+
+function pad(n) {
+ return n<10?"0"+n:n;
+}
+
+/* ЧАСЫ И ДАТА */
+
+function clock() {
+
+ var d=new Date();
+
+ var days=[
+ "воскресенье","понедельник","вторник",
+ "среда","четверг","пятница","суббота"
+ ];
+
+ var months=[
+ "января","февраля","марта","апреля",
+ "мая","июня","июля","августа",
+ "сентября","октября","ноября","декабря"
+ ];
+
+ el("clock").innerHTML=
+ pad(d.getHours())+":"+pad(d.getMinutes());
+
+ el("seconds").innerHTML=pad(d.getSeconds());
+
+ el("date").innerHTML=
+ days[d.getDay()]+", "+
+ d.getDate()+" "+
+ months[d.getMonth()]+" "+
+ d.getFullYear();
+}
+
+clock();
+setInterval(clock,1000);
+
+
+/* ЗАГРУЗКА ФОТОГРАФИЙ */
+
+var weatherImages={
+
+ clear:
+ "https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1920&q=85",
+
+ cloudy:
+ "https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=1920&q=85",
+
+ rain:
+ "https://images.unsplash.com/photo-1519692933481-e162a57d6721?auto=format&fit=crop&w=1920&q=85",
+
+ snow:
+ "https://images.unsplash.com/photo-1418985991508-e47386d96a71?auto=format&fit=crop&w=1920&q=85",
+
+ fog:
+ "https://images.unsplash.com/photo-1485236715568-ddc5ee6ca227?auto=format&fit=crop&w=1920&q=85",
+
+ storm:
+ "https://images.unsplash.com/photo-1500673922987-e212871fec22?auto=format&fit=crop&w=1920&q=85",
+
+ night:
+ "https://images.unsplash.com/photo-1519608487953-e999c86e7455?auto=format&fit=crop&w=1920&q=85"
+
+};
+
+var lastImage="";
+
+function changeWeatherBackground(code) {
+
+ var hour=new Date().getHours();
+ var night=hour>=20||hour<6;
+
+ var selected;
+
+ if(code>=95) {
+  selected=weatherImages.storm;
+ }
+ else if(code>=71&&code<=86) {
+  selected=weatherImages.snow;
+ }
+ else if((code>=51&&code<=67)||(code>=80&&code<=82)) {
+  selected=weatherImages.rain;
+ }
+ else if(code===45||code===48) {
+  selected=weatherImages.fog;
+ }
+ else if(night) {
+  selected=weatherImages.night;
+ }
+ else if(code===0||code===1) {
+  selected=weatherImages.clear;
+ }
+ else {
+  selected=weatherImages.cloudy;
+ }
+
+ if(selected===lastImage) return;
+
+ var img=new Image();
+
+ img.onload=function() {
+
+  el("weatherBg").style.backgroundImage=
+   'url("'+selected+'")';
+
+  lastImage=selected;
+ };
+
+ img.onerror=function() {
+  el("status").innerHTML+=
+   " · Фото временно недоступно";
+ };
+
+ img.src=selected;
+}
+
+
+/* ПОГОДНЫЕ ИКОНКИ */
+
+function wx(c) {
+
+ if(c===0) return ["Ясно","☀️"];
+
+ if(c===1) return ["Преимущественно ясно","🌤️"];
+
+ if(c===2) return ["Переменная облачность","⛅"];
+
+ if(c===3) return ["Облачно","☁️"];
+
+ if(c===45||c===48) return ["Туман","🌫️"];
+
+ if(c>=51&&c<=67) return ["Дождь/морось","🌧️"];
+
+ if((c>=71&&c<=77)||c===85||c===86) return ["Снег","🌨️"];
+
+ if(c>=80&&c<=82) return ["Ливень","🌧️"];
+
+ if(c>=95) return ["Гроза","⛈️"];
+
+ return ["Погодные условия","🌙"];
+}
+
+
+/* КОД ПОГОДЫ MET NORWAY */
+
+function metCode(s) {
+
+ if(!s) return 3;
+
+ if(s.indexOf("thunder")>=0) return 95;
+
+ if(s.indexOf("snow")>=0) return 71;
+
+ if(s.indexOf("rain")>=0||s.indexOf("sleet")>=0) return 61;
+
+ if(s.indexOf("fog")>=0) return 45;
+
+ if(s.indexOf("clearsky")>=0) return 0;
+
+ if(s.indexOf("partlycloudy")>=0) return 2;
+
+ if(s.indexOf("fair")>=0) return 1;
+
+ return 3;
+}
+
+
+/* HTTP ЗАПРОС */
+
+function xhr(url,cb) {
+
+ var x=new XMLHttpRequest();
+
+ x.open("GET",url,true);
+
+ x.timeout=14000;
+
+ x.onreadystatechange=function() {
+
+  if(x.readyState===4) {
+
+   if(x.status>=200&&x.status<300) {
+
+    try {
+     cb(null,JSON.parse(x.responseText));
+    }
+    catch(e) {
+     cb(e);
+    }
+
+   } else {
+    cb(new Error("HTTP "+x.status));
+   }
+  }
+ };
+
+ x.onerror=function() {
+  cb(new Error("Ошибка сети/CORS"));
+ };
+
+ x.ontimeout=function() {
+  cb(new Error("Тайм-аут"));
+ };
+
+ try {
+  x.send(null);
+ }
+ catch(e) {
+  cb(e);
+ }
+}
+
+
+/* ОТОБРАЖЕНИЕ ПОГОДЫ */
+
+function render(d,source) {
+
+ el("temperature").innerHTML=
+  Math.round(d.temp)+"°";
+
+ el("currentIcon").innerHTML=d.icon;
+
+ el("description").innerHTML=
+  d.description+" · "+source;
+
+ el("feels").innerHTML=
+  Math.round(d.feels)+"°";
+
+ el("humidity").innerHTML=
+  Math.round(d.humidity)+"%";
+
+ el("wind").innerHTML=
+  d.wind.toFixed(1)+" м/с";
+
+ el("pressure").innerHTML=
+  d.pressure?
+  Math.round(d.pressure*.750062)+" мм":
+  "— мм";
+
+ el("sourceName").innerHTML=source;
+
+ el("footerSource").innerHTML=
+  "Донецк · "+source;
+
+ el("updated").innerHTML=
+  "Обновлено: "+
+  new Date().toLocaleTimeString("ru-RU",{
+   hour:"2-digit",
+   minute:"2-digit"
+  });
+
+ /* ФОН ПО ТЕКУЩЕЙ ПОГОДЕ */
+
+ changeWeatherBackground(d.code);
+
+ /* ПРОГНОЗ НА 8 ЧАСОВ */
+
+ var h="";
+ var i,it,dt,w;
+
+ for(i=0;i<d.hours.length&&i<8;i++) {
+
+  it=d.hours[i];
+
+  dt=new Date(it.time);
+
+  w=wx(it.code);
+
+  h+=
+   '<div class="hour">'+
+    '<div class="hourtime">'+
+     pad(dt.getHours())+':00'+
+    '</div>'+
+
+    '<div class="houricon">'+
+     w[1]+
+    '</div>'+
+
+    '<div class="hourtemp">'+
+     Math.round(it.temp)+'°'+
+    '</div>'+
+
+    '<div class="rain">'+
+     '💧 '+(it.rainText||"—")+
+    '</div>'+
+   '</div>';
+ }
+
+ el("hours").innerHTML=
+  h||'<div class="hour">Прогноз недоступен</div>';
+
+ el("status").innerHTML=
+  "Данные получены · автообновление каждые 30 минут";
+
+ /* СОХРАНЕНИЕ ДАННЫХ */
+
+ try {
+
+  localStorage.setItem(
+   CACHE,
+   JSON.stringify({
+    data:d,
+    source:source
+   })
+  );
+
+ }
+ catch(e) {}
+}
+
+
+/* MET NORWAY */
+
+function met(cb) {
+
+ var url=
+  "https://api.met.no/weatherapi/locationforecast/2.0/compact?lat="+
+  LAT+"&lon="+LON;
+
+ xhr(url,function(err,j) {
+
+  if(err) {
+   cb(err);
+   return;
+  }
+
+  try {
+
+   var a=j.properties.timeseries;
+
+   var now=Date.now();
+
+   var first=null;
+   var hs=[];
+
+   var i,t,dt,ins,period,code,rain;
+
+   for(i=0;i<a.length;i++) {
+
+    t=a[i];
+
+    dt=new Date(t.time).getTime();
+
+    ins=t.data.instant.details;
+
+    period=
+     t.data.next_1_hours||
+     t.data.next_6_hours||
+     t.data.next_12_hours;
+
+    code=period&&period.summary?
+     metCode(period.summary.symbol_code):3;
+
+    if(!first&&dt>=now-3600000) {
+
+     var currentWeather=wx(code);
+
+     first={
+
+      temp:ins.air_temperature,
+
+      feels:ins.air_temperature,
+
+      humidity:ins.relative_humidity,
+
+      wind:ins.wind_speed,
+
+      pressure:ins.air_pressure_at_sea_level,
+
+      description:currentWeather[0],
+
+      icon:currentWeather[1],
+
+      code:code
+
+     };
+    }
+
+    if(dt>=now-3600000&&hs.length<8) {
+
+     rain=
+      period&&period.details?
+      period.details.precipitation_amount:0;
+
+     hs.push({
+
+      time:t.time,
+
+      temp:ins.air_temperature,
+
+      code:code,
+
+      rainText:(rain||0).toFixed(1)+" мм"
+
+     });
+    }
+   }
+
+   if(!first) {
+    throw new Error("MET: нет текущих данных");
+   }
+
+   first.hours=hs;
+
+   cb(null,first);
+
+  }
+  catch(e) {
+   cb(e);
+  }
+
+ });
+}
+
+
+/* OPEN-METEO - РЕЗЕРВНЫЙ ИСТОЧНИК */
+
+function openMeteo(cb) {
+
+ var url=
+ "https://api.open-meteo.com/v1/forecast?"+
+ "latitude="+LAT+
+ "&longitude="+LON+
+ "&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,pressure_msl,wind_speed_10m"+
+ "&hourly=temperature_2m,precipitation_probability,weather_code"+
+ "&forecast_days=2"+
+ "&timezone=Europe%2FMoscow";
+
+ xhr(url,function(err,j) {
+
+  if(err) {
+   cb(err);
+   return;
+  }
+
+  try {
+
+   var c=j.current;
+
+   var a=j.hourly;
+
+   var now=Date.now();
+
+   var idx=0;
+   var i,hs=[],tm;
+
+   for(i=0;i<a.time.length;i++) {
+
+    tm=new Date(a.time[i]).getTime();
+
+    if(tm>=now-3600000) {
+     idx=i;
+     break;
+    }
+   }
+
+   for(i=idx;i<idx+8&&i<a.time.length;i++) {
+
+    hs.push({
+
+     time:a.time[i],
+
+     temp:a.temperature_2m[i],
+
+     code:a.weather_code[i],
+
+     rainText:
+      (a.precipitation_probability[i]||0)+"%"
+
+    });
+   }
+
+   var w=wx(c.weather_code);
+
+   cb(null,{
+
+    temp:c.temperature_2m,
+
+    feels:c.apparent_temperature,
+
+    humidity:c.relative_humidity_2m,
+
+    wind:c.wind_speed_10m/3.6,
+
+    pressure:c.pressure_msl,
+
+    description:w[0],
+
+    icon:w[1],
+
+    code:c.weather_code,
+
+    hours:hs
+
+   });
+
+  }
+  catch(e) {
+   cb(e);
+  }
+
+ });
+}
+
+
+/* ПОСЛЕДНИЕ СОХРАНЁННЫЕ ДАННЫЕ */
+
+function showCache() {
+
+ var old=null;
+
+ try {
+  old=JSON.parse(localStorage.getItem(CACHE)||"null");
+ }
+ catch(e) {}
+
+ if(old&&old.data) {
+
+  render(old.data,old.source+" · сохранённые данные");
+
+  el("status").innerHTML=
+   "Нет соединения · показаны последние сохранённые данные";
+
+  return true;
+ }
+
+ return false;
+}
+
+
+/* ОБЩЕЕ ОБНОВЛЕНИЕ */
+
+function done() {
+
+ busy=false;
+
+ el("refresh").disabled=false;
+}
+
+
+function load() {
+
+ if(busy) return;
+
+ busy=true;
+
+ el("refresh").disabled=true;
+
+ el("status").innerHTML=
+  "Проверяем MET Norway...";
+
+ /* СНАЧАЛА MET NORWAY */
+
+ met(function(e,d) {
+
+  if(!e) {
+
+   render(d,"MET Norway");
+
+   done();
+
+   return;
+  }
+
+  el("status").innerHTML=
+   "MET Norway недоступен · пробуем Open-Meteo...";
+
+  /* РЕЗЕРВНЫЙ ИСТОЧНИК */
+
+  openMeteo(function(e2,d2) {
+
+   if(!e2) {
+
+    render(d2,"Open-Meteo");
+
+    el("status").innerHTML=
+     "MET Norway недоступен · актуальные данные Open-Meteo";
+
+    done();
+
+    return;
+   }
+
+   /* НЕТ ИНТЕРНЕТА */
+
+   if(showCache()) {
+
+    el("status").innerHTML=
+     "Нет связи · последние сохранённые данные";
+
+   } else {
+
+    el("temperature").innerHTML="—°";
+
+    el("description").innerHTML=
+     "Нет соединения с погодными сервисами";
+
+    el("hours").innerHTML=
+     '<div class="hour">Нет данных</div>';
+
+    el("status").innerHTML=
+     "Проверьте Wi-Fi и нажмите «Обновить»";
+   }
+
+   done();
+
+  });
+
+ });
+
+}
+
+
+/* КНОПКА ОБНОВЛЕНИЯ */
+
+el("refresh").onclick=function() {
+ load();
+};
+
+
+/* АВТОМАТИЧЕСКОЕ ОБНОВЛЕНИЕ */
+
+load();
+
+setInterval(function() {
+
+ if(!document.hidden) {
+  load();
+ }
+
+},1800000);
+
+
+/* НЕ ДАВАТЬ ЭКРАНУ ГАСНУТЬ,
+   ЕСЛИ БРАУЗЕР ПОДДЕРЖИВАЕТ WAKE LOCK */
+
+if(navigator.wakeLock&&navigator.wakeLock.request) {
+
+ navigator.wakeLock.request("screen").catch(function(){});
+
+ document.addEventListener("visibilitychange",function(){
+
+  if(!document.hidden) {
+
+   navigator.wakeLock.request("screen").catch(function(){});
+
+  }
+
+ });
+
+}
+
 })();
-</script></body></html>
+</script>
+
+</body>
+</html>
