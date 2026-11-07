@@ -1,0 +1,507 @@
+
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Погода Донецк">
+<meta name="theme-color" content="#101c2a">
+
+<title>Часы и погода — Донецк</title>
+
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  background: #101c2a;
+  color: white;
+}
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+#background {
+  position: fixed;
+  inset: 0;
+  background:
+    linear-gradient(rgba(5,12,25,.38),rgba(5,12,25,.65)),
+    url("https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1800")
+    center / cover no-repeat;
+  transform: scale(1.03);
+  transition: background-image 1s ease;
+  z-index: 0;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(5,15,30,.2),
+    rgba(5,15,30,.25) 55%,
+    rgba(5,15,30,.85)
+  );
+  z-index: 1;
+}
+
+.app {
+  position: relative;
+  z-index: 2;
+  height: 100%;
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: max(20px, env(safe-area-inset-top)) 5%
+           max(15px, env(safe-area-inset-bottom));
+}
+
+.top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.city {
+  font-size: clamp(20px, 3vw, 32px);
+  font-weight: 600;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px black;
+}
+
+.date {
+  font-size: clamp(13px, 1.8vw, 19px);
+  opacity: .85;
+  margin-top: 7px;
+}
+
+.status {
+  font-size: 12px;
+  color: #d4e9ff;
+  text-align: right;
+}
+
+.center {
+  text-align: center;
+  margin: auto 0;
+}
+
+.clock {
+  font-size: clamp(85px, 17vw, 190px);
+  font-weight: 200;
+  line-height: 1.05;
+  letter-spacing: 5px;
+  font-variant-numeric: tabular-nums;
+  color: #fff;
+  -webkit-text-stroke: 1px rgba(180,220,255,.8);
+  text-shadow:
+    0 0 5px #fff,
+    0 0 15px #65c8ff,
+    0 0 35px #249aff,
+    0 0 70px rgba(0,130,255,.8),
+    0 5px 20px #000;
+}
+
+.seconds {
+  font-size: .38em;
+  opacity: .85;
+  vertical-align: 15%;
+  letter-spacing: 1px;
+}
+
+.weather-main {
+  margin-top: 15px;
+}
+
+.temperature {
+  font-size: clamp(48px, 8vw, 85px);
+  font-weight: 200;
+  text-shadow: 0 3px 20px black;
+}
+
+.description {
+  font-size: clamp(17px, 2.5vw, 25px);
+  margin-top: 4px;
+  text-shadow: 0 2px 10px black;
+}
+
+.details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 25px;
+  margin-top: 23px;
+  font-size: clamp(13px, 1.7vw, 18px);
+  text-shadow: 0 2px 10px black;
+}
+
+.hourly-title {
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 2px;
+  margin-bottom: 13px;
+  opacity: .85;
+}
+
+.hourly {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 8px;
+}
+
+.hour {
+  background: rgba(12,28,48,.55);
+  border: 1px solid rgba(255,255,255,.22);
+  border-radius: 15px;
+  padding: 12px 3px;
+  text-align: center;
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 5px 20px rgba(0,0,0,.2);
+}
+
+.hour-time {
+  font-size: clamp(11px, 1.5vw, 16px);
+  opacity: .8;
+}
+
+.hour-icon {
+  font-size: clamp(20px, 3vw, 32px);
+  margin: 10px 0;
+}
+
+.hour-temp {
+  font-size: clamp(14px, 2vw, 21px);
+  font-weight: 600;
+}
+
+.hour-rain {
+  font-size: 10px;
+  opacity: .7;
+  margin-top: 6px;
+}
+
+.bottom {
+  padding-top: 14px;
+}
+
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 13px;
+  font-size: 11px;
+  opacity: .65;
+}
+
+.source {
+  color: white;
+  text-decoration: none;
+}
+
+.refresh {
+  background: rgba(255,255,255,.13);
+  color: white;
+  border: 1px solid rgba(255,255,255,.3);
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+}
+
+@media (orientation: portrait) {
+  .app { padding-left: 4%; padding-right: 4%; }
+  .hourly { grid-template-columns: repeat(4, 1fr); }
+  .hour { padding: 8px 2px; }
+  .details { gap: 12px; }
+  .clock { font-size: clamp(75px, 19vw, 130px); }
+}
+
+@media (max-height: 500px) {
+  .clock { font-size: clamp(65px, 14vw, 115px); }
+  .temperature { font-size: 48px; }
+  .weather-main { margin-top: 0; }
+  .details { margin-top: 8px; }
+  .hour { padding: 6px 2px; }
+  .hour-icon { margin: 4px 0; }
+  .hourly-title { margin-bottom: 6px; }
+  .bottom { padding-top: 5px; }
+  .footer { margin-top: 5px; }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="background"></div>
+<div class="overlay"></div>
+
+<div class="app">
+
+  <div class="top">
+    <div>
+      <div class="city">ДОНЕЦК · ДНР</div>
+      <div class="date" id="date">Загрузка даты...</div>
+    </div>
+    <div class="status">
+      <div>LIVE WEATHER</div>
+      <div id="updated">Загрузка...</div>
+    </div>
+  </div>
+
+  <div class="center">
+    <div class="clock" id="clock">
+      00:00<span class="seconds">:00</span>
+    </div>
+
+    <div class="weather-main">
+      <div class="temperature" id="temperature">--°</div>
+      <div class="description" id="description">
+        Загружаем погоду...
+      </div>
+
+      <div class="details">
+        <span id="feels">🌡 Ощущается: --°</span>
+        <span id="humidity">💧 Влажность: --%</span>
+        <span id="wind">💨 Ветер: -- м/с</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="hourly-title">
+      ПРОГНОЗ НА БЛИЖАЙШИЕ 8 ЧАСОВ
+    </div>
+
+    <div class="hourly" id="hourly">
+      <div class="hour">Загрузка...</div>
+    </div>
+
+    <div class="footer">
+      <a class="source"
+         href="https://www.gismeteo.ru/weather-donetsk-5080/"
+         target="_blank">
+        Погода: Gismeteo · Дополнительный источник
+      </a>
+
+      <button class="refresh" onclick="loadWeather()">
+        ↻ Обновить
+      </button>
+    </div>
+  </div>
+
+</div>
+
+<script>
+const LAT = 48.0159;
+const LON = 37.8028;
+
+const API =
+`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,is_day,precipitation,weather_code,wind_speed_10m&hourly=temperature_2m,precipitation_probability,weather_code&forecast_days=2&timezone=Europe/Moscow`;
+
+const descriptions = {
+  0: "Ясно",
+  1: "Преимущественно ясно",
+  2: "Переменная облачность",
+  3: "Пасмурно",
+  45: "Туман",
+  48: "Изморозь",
+  51: "Лёгкая морось",
+  53: "Морось",
+  55: "Сильная морось",
+  61: "Небольшой дождь",
+  63: "Дождь",
+  65: "Сильный дождь",
+  71: "Небольшой снег",
+  73: "Снег",
+  75: "Сильный снег",
+  80: "Ливень",
+  81: "Сильный ливень",
+  82: "Очень сильный ливень",
+  85: "Снегопад",
+  86: "Сильный снегопад",
+  95: "Гроза",
+  96: "Гроза с градом",
+  99: "Сильная гроза"
+};
+
+function icon(code, day=true) {
+  if (code === 0) return day ? "☀️" : "🌙";
+  if (code <= 2) return day ? "🌤️" : "☁️";
+  if (code === 3) return "☁️";
+  if (code <= 48) return "🌫️";
+  if (code <= 55) return "🌦️";
+  if (code <= 65) return "🌧️";
+  if (code <= 77) return "❄️";
+  if (code <= 82) return "🌧️";
+  if (code <= 86) return "🌨️";
+  return "⛈️";
+}
+
+function updateClock() {
+  const now = new Date();
+
+  const h = String(now.getHours()).padStart(2,"0");
+  const m = String(now.getMinutes()).padStart(2,"0");
+  const s = String(now.getSeconds()).padStart(2,"0");
+
+  document.getElementById("clock").innerHTML =
+    `${h}:${m}<span class="seconds">:${s}</span>`;
+
+  document.getElementById("date").textContent =
+    now.toLocaleDateString("ru-RU", {
+      weekday:"long",
+      day:"numeric",
+      month:"long",
+      year:"numeric"
+    });
+}
+
+function setBackground(code, isDay) {
+  let url;
+
+  if (code === 0 || code === 1) {
+    url = isDay
+      ? "https://images.unsplash.com/photo-1470252649378-9c29740c9fa8?w=1800"
+      : "https://images.unsplash.com/photo-1519608487953-e999c86e7455?w=1800";
+  } else if (code <= 3) {
+    url = "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=1800";
+  } else if (code <= 48) {
+    url = "https://images.unsplash.com/photo-1485236715568-ddc5ee6ca227?w=1800";
+  } else if (code <= 65 || code <= 82) {
+    url = "https://images.unsplash.com/photo-1519692933481-e162a57d6721?w=1800";
+  } else if (code <= 86) {
+    url = "https://images.unsplash.com/photo-1517299321609-52687d1bc55a?w=1800";
+  } else {
+    url = "https://images.unsplash.com/photo-1500673922987-e212871fec22?w=1800";
+  }
+
+  document.getElementById("background").style.backgroundImage =
+    `linear-gradient(rgba(5,12,25,.38),rgba(5,12,25,.65)),url("${url}")`;
+}
+
+async function loadWeather() {
+  const updated = document.getElementById("updated");
+  updated.textContent = "Обновление...";
+
+  try {
+    const response = await fetch(API, {cache:"no-store"});
+    if (!response.ok) throw new Error("Ошибка загрузки");
+
+    const data = await response.json();
+    const c = data.current;
+    const h = data.hourly;
+
+    const code = c.weather_code;
+    const day = c.is_day === 1;
+
+    document.getElementById("temperature").textContent =
+      Math.round(c.temperature_2m) + "°";
+
+    document.getElementById("description").textContent =
+      icon(code, day) + " " + (descriptions[code] || "Переменная погода");
+
+    document.getElementById("feels").textContent =
+      "🌡 Ощущается: " + Math.round(c.apparent_temperature) + "°";
+
+    document.getElementById("humidity").textContent =
+      "💧 Влажность: " + c.relative_humidity_2m + "%";
+
+    document.getElementById("wind").textContent =
+      "💨 Ветер: " + Math.round(c.wind_speed_10m) + " км/ч";
+
+    setBackground(code, day);
+
+    const now = new Date();
+    let start = h.time.findIndex(t => new Date(t) > now);
+
+    if (start < 0) start = 0;
+
+    let html = "";
+
+    for (let i = start; i < start + 8 && i < h.time.length; i++) {
+      const time = new Date(h.time[i]);
+      const hour = String(time.getHours()).padStart(2,"0");
+
+      const weatherCode = h.weather_code[i];
+      const emoji = icon(weatherCode, time.getHours() >= 7 &&
+                                      time.getHours() < 20);
+
+      html += `
+        <div class="hour">
+          <div class="hour-time">${hour}:00</div>
+          <div class="hour-icon">${emoji}</div>
+          <div class="hour-temp">
+            ${Math.round(h.temperature_2m[i])}°
+          </div>
+          <div class="hour-rain">
+            💧 ${h.precipitation_probability[i] ?? 0}%
+          </div>
+        </div>
+      `;
+    }
+
+    document.getElementById("hourly").innerHTML = html;
+
+    updated.textContent =
+      "Обновлено: " + new Date().toLocaleTimeString("ru-RU", {
+        hour:"2-digit", minute:"2-digit"
+      });
+
+  } catch(error) {
+    updated.textContent = "Нет связи · ожидаем";
+    console.error(error);
+  }
+}
+
+// Часы каждую секунду
+updateClock();
+setInterval(updateClock, 1000);
+
+// Погода каждые 30 минут
+loadWeather();
+setInterval(loadWeather, 30 * 60 * 1000);
+
+// Обновление при возвращении на страницу
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) {
+    updateClock();
+    loadWeather();
+  }
+});
+
+// Попытка удержания экрана на поддерживаемых устройствах
+let wakeLock = null;
+
+async function keepAwake() {
+  try {
+    if ("wakeLock" in navigator) {
+      wakeLock = await navigator.wakeLock.request("screen");
+    }
+  } catch(e) {
+    console.log("Wake Lock недоступен", e);
+  }
+}
+
+document.addEventListener("click", keepAwake);
+document.addEventListener("visibilitychange", () => {
+  if (!document.hidden) keepAwake();
+});
+
+</script>
+
+</body>
+</html>
